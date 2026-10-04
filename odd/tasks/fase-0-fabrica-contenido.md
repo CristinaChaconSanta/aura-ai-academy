@@ -48,7 +48,7 @@ Motivo: la usuaria pidió docente visible, investigación con Grok Bot, repo com
 - [x] T10 — Controles de estilo en el validador: frases prohibidas (`docs/frases-prohibidas.txt`), largo de párrafo y de frase, rayas, exclamaciones, emojis. Ruta: delegada (writer trigger: validador + tests).
 - [x] T11 — Lección de referencia `N1-M1-L01` escrita y verificada con fuentes, para que el redactor imite el tono. Ruta: inline (requiere investigación con fuentes).
 - [x] T12 — Protocolo de calibración `docs/prueba-calibracion.md` (las "pruebas" para Cursor) y hoja de ruta con fases 2 = backend, 3 = frontend. Ruta: inline.
-- [ ] T13 — Repo privado en GitHub y push de la rama. Ruta: inline. Autorizado por la usuaria.
+- [x] T13 — Repo privado en GitHub y push de la rama. Ruta: inline. Autorizado por la usuaria.
 
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
