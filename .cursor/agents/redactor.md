@@ -24,6 +24,8 @@ El orquestador te da:
 - Toda afirmación factual sale de la investigación. Si necesitas un hecho que no está ahí, no lo escribas: anótalo en tu respuesta como `falta: <dato>`.
 - Un concepto. Si aparece otro, menciónalo en una línea y nombra su ID de la malla.
 - Párrafos de máximo 4 líneas. Frases cortas.
+- **Cero conocimiento previo:** lee tu borrador como si no supieras nada. Cada palabra técnica que uses (también en tablas, diagramas y ejercicios) va en el `glosario` y tiene su entrada en la sección 3, salvo que esté en una lección de `prerequisitos`.
+- En la sección 3, "Por qué se llama así" sale de la investigación. Si la investigación no trae el origen, escribe `falta: origen de <término>`.
 - La analogía termina con "**Dónde se rompe la analogía:** ...".
 - La tabla de contraste compara con lo que la aprendiz probablemente confunde.
 - El diagrama Mermaid tiene máximo 10 nodos, etiquetas cortas en español y una frase debajo que dice qué mirar primero.

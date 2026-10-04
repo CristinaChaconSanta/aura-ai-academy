@@ -31,11 +31,14 @@ factuales y se cortó a la mitad. Ver `docs/referencia/revision-malla.md`, secci
 
 ## 3. Diseño para TDAH
 
-- Un concepto por lección. Si aparece un segundo concepto, se menciona en una línea y se enlaza a su lección.
+- **Cero conocimiento previo.** Si una palabra técnica no se explicó en esta lección o en un prerequisito, se explica en la sección 3. Ante la duda, se explica.
+- **Explica el origen de los nombres.** La aprendiz es periodista: entender de dónde viene una palabra la fija en la memoria. El origen también lleva fuente.
+
+- Un concepto por lección, pero explicado completo: más vale una lección de 20 minutos clara que una de 10 que asume cosas. Si aparece un segundo concepto, se menciona en una línea y se enlaza a su lección.
 - Frases cortas. Párrafos de máximo 4 líneas.
 - Negrita solo para la idea clave de cada sección.
 - Nada de "como vimos antes" sin enlace: la aprendiz no tiene que recordar.
-- Cada lección termina con una acción concreta (sección 8).
+- Cada lección termina con una acción concreta (sección 9).
 - Sin relleno motivacional ("¡Excelente!", "Es muy fácil").
 
 ## 4. Lenguaje
@@ -58,7 +61,7 @@ Para cada lección, el verificador entrega un reporte con:
 
 1. **Afirmaciones revisadas:** tabla `afirmación | fuente | veredicto (✅ correcta / ⚠️ imprecisa / ❌ falsa / ❓ sin fuente)`.
 2. **Formato:** salida de `.venv/bin/python scripts/validate_lessons.py <ruta>`.
-3. **Diseño:** ¿un solo concepto?, ¿la analogía dice dónde se rompe?, ¿el diagrama tiene ≤ 10 nodos?
+3. **Diseño:** ¿un solo concepto?, ¿toda palabra técnica tiene entrada en la sección 3?, ¿la analogía dice dónde se rompe?, ¿el diagrama tiene ≤ 10 nodos?
 4. **Veredicto final:** `aprobar` (pasa a `verificada`) o `corregir` (con lista de cambios).
 
 Máximo 2 rondas de corrección. Si a la tercera sigue fallando: se detiene y se pregunta a la aprendiz.

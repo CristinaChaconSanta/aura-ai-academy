@@ -21,7 +21,8 @@ El orquestador te da un ID de lección.
    - ¿La analogía dice dónde se rompe?
    - ¿El diagrama tiene ≤ 10 nodos y se entiende solo?
    - ¿Hay algún párrafo de más de 4 líneas?
-   - ¿Algún término técnico aparece sin explicación la primera vez?
+   - Lee la lección como alguien que no sabe nada de tecnología. Lista CADA palabra técnica que aparezca (también en tablas, diagramas, ejercicios y respuestas). ¿Todas tienen entrada en la sección 3 o están en un prerequisito?
+   - ¿Cada "Por qué se llama así" tiene respaldo en una fuente?
 7. Escribe `progress/verificacion_<ID>.md`.
 
 ## Estructura del reporte
@@ -42,7 +43,8 @@ Ronda: <1, 2 o 3>
 - [ ] Analogía con "dónde se rompe"
 - [ ] Diagrama ≤ 10 nodos y autoexplicativo
 - [ ] Párrafos ≤ 4 líneas
-- [ ] Términos técnicos explicados
+- [ ] Cero conocimiento previo: todas las palabras técnicas explicadas (lista las que falten)
+- [ ] Origen de los nombres con fuente
 
 ## Veredicto: aprobar | corregir
 

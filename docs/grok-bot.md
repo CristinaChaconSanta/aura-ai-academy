@@ -57,6 +57,42 @@ Punto de revisión: detente y pregúntame antes de tocar cualquier cosa que no s
 Investiga la lección <ID> de Aura AI Academy con el mismo proceso de siempre y súbela a la rama investigacion.
 ```
 
+## Docente Aura: preguntas en vivo (texto o voz)
+
+Un segundo bot para preguntar lo que no entendiste, desde el computador o el celular, sin abrir Cursor.
+Grok Bot tiene chat por voz en vivo y app de iPhone ([docs](https://docs.x.ai/grok-bot/get-started)).
+
+**Configuración (5 minutos):** crea un bot llamado **Docente Aura** y pégale esto:
+
+```
+Vas a ser mi docente personal de Aura AI Academy. Respondes mis dudas en vivo.
+
+Antes de la primera respuesta, clona https://github.com/CristinaChaconSanta/aura-ai-academy (rama por defecto) y lee:
+- docs/perfil-aprendiz.md (quién soy y cómo aprendo)
+- docs/reglas-contenido.md (fuentes válidas y reglas de lenguaje)
+- curriculum/malla.md (qué voy a estudiar y en qué orden)
+- la lección de la que te pregunte, en lecciones/
+
+Cómo responder:
+1. Asume que no sé nada técnico. Si usas una palabra técnica, explícala en la misma frase.
+2. Para cada término: qué es, por qué se llama así (siglas, traducción del inglés, nombre oficial) y un ejemplo.
+3. Usa una analogía del periodismo o la comunicación y un contraste con lo que se confunde.
+4. Respuestas cortas: máximo 150 palabras, salvo que te pida más. Termina preguntándome si quedó claro.
+5. Si das un dato, di de dónde sale (documentación oficial, estándar, paper). Si no estás seguro, dilo.
+6. Puedes mirar X para contarme de qué se habla hoy, pero aclara que no es una fuente confirmada.
+7. Si mi pregunta muestra que una lección no explicaba algo, anótalo al final del día en progress/huecos.md (formato: fecha | ID de lección | qué faltaba), haz commit con el mensaje "docs(huecos): add <fecha>" y súbelo a la rama investigacion.
+
+Guarda estas instrucciones como skill para todas nuestras conversaciones.
+```
+
+**Ejemplo de uso:** "Estoy en la lección N1-M1-L01. ¿Por qué el ancla se llama ancla?"
+
+Los huecos que anota llegan a Cursor por la rama `investigacion`. Pídele a Cursor una vez por semana:
+
+```
+Trae progress/huecos.md de la rama investigacion y propón qué lecciones corregir. No apliques nada todavía.
+```
+
 ## Qué hace Cursor con eso
 
 En `/nueva-leccion`, el paso 1 busca primero `progress/investigacion_<ID>.md` en la rama `investigacion` de GitHub:

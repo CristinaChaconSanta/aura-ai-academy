@@ -12,6 +12,7 @@ from __future__ import annotations
 import bisect
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -27,17 +28,23 @@ REQUIRED_KEYS = (
 EXPECTED_HEADINGS = (
     "## 1. El gancho",
     "## 2. La idea en una frase",
-    "## 3. La analogía",
-    "## 4. Contraste",
-    "## 5. Diagrama",
-    "## 6. Bueno vs. malo",
-    "## 7. Ponte a prueba",
-    "## 8. Mini ejercicio",
-    "## 9. Cómo te ayuda a revisar a la IA",
-    "## 10. Fuentes",
+    "## 3. Las palabras nuevas",
+    "## 4. La analogía",
+    "## 5. Contraste",
+    "## 6. Diagrama",
+    "## 7. Bueno vs. malo",
+    "## 8. Ponte a prueba",
+    "## 9. Mini ejercicio",
+    "## 10. Cómo te ayuda a revisar a la IA",
+    "## 11. Fuentes",
 )
-MAX_WORDS = 1400
-MIN_DURATION, MAX_DURATION = 5, 20
+(GLOSSARY_SECTION, CONTRAST_SECTION, DIAGRAM_SECTION, QUIZ_SECTION, SOURCES_SECTION) = (
+    EXPECTED_HEADINGS[2], EXPECTED_HEADINGS[4], EXPECTED_HEADINGS[5],
+    EXPECTED_HEADINGS[7], EXPECTED_HEADINGS[10],
+)
+GLOSSARY_LABELS = ("**Qué es:**", "**Por qué se llama así:**", "**Ejemplo:**")
+MAX_WORDS = 2200
+MIN_DURATION, MAX_DURATION = 5, 25
 
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
 TABLE_SEPARATOR_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
@@ -50,7 +57,7 @@ MAX_SENTENCE_WORDS = 40
 MAX_EM_DASHES = 3
 MAX_EXCLAMATIONS = 1
 MAX_EMOJIS = 3
-SOURCES_HEADING = "## 10. Fuentes"
+SOURCES_HEADING = SOURCES_SECTION
 LIST_ITEM_RE = re.compile(r"^\s*(?:[-*]\s|\d+\.\s)")
 HTML_TAG_RE = re.compile(r"<[^>]*>")
 INLINE_CODE_RE = re.compile(r"`[^`]*`")
@@ -218,52 +225,95 @@ def _strip_fenced_blocks(text: str) -> str:
     return "\n".join(kept)
 
 
-def _validate_sections(sections: dict[str, str]) -> list[str]:
+def _normalize_term(text: str) -> str:
+    """Lowercase, strip accents (NFD minus combining marks) and collapse spaces."""
+    decomposed = unicodedata.normalize("NFD", text)
+    stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
+    return " ".join(stripped.lower().split())
+
+
+def _glossary_entries(content: str) -> list[tuple[str, str]]:
+    """Split section 3 into (term, entry_text) by `### ` headings outside fences."""
+    entries: list[tuple[str, list[str]]] = []
+    in_fence = False
+    for line in content.splitlines():
+        if FENCE_RE.match(line):
+            in_fence = not in_fence
+        elif not in_fence and line.startswith("### "):
+            entries.append((line[4:].strip(), []))
+            continue
+        if entries:
+            entries[-1][1].append(line)
+    return [(term, "\n".join(lines)) for term, lines in entries]
+
+
+def _validate_glossary(content: str, glossary: list[str]) -> list[str]:
+    entries = _glossary_entries(content)
+    if not entries:
+        return ["sección 3: necesita al menos una entrada con encabezado '### <término>'"]
+    errors: list[str] = []
+    for term, text in entries:
+        for label in GLOSSARY_LABELS:
+            if label not in text:
+                errors.append(f'sección 3: a "{term}" le falta "{label}"')
+    headings = [_normalize_term(term) for term, _ in entries]
+    for item in glossary:
+        wanted = _normalize_term(item)
+        if not wanted or not any(heading.startswith(wanted) for heading in headings):
+            errors.append(f'sección 3: el término del glosario "{item}" no tiene explicación')
+    return errors
+
+
+def _validate_sections(sections: dict[str, str], glossary: list[str]) -> list[str]:
     errors: list[str] = []
     for heading, content in sections.items():
         if not content.strip():
             errors.append(f"la sección '{heading}' está vacía")
 
-    contrast = sections.get(EXPECTED_HEADINGS[3])
+    glossary_section = sections.get(GLOSSARY_SECTION)
+    if glossary_section is not None and glossary_section.strip():
+        errors.extend(_validate_glossary(glossary_section, glossary))
+
+    contrast = sections.get(CONTRAST_SECTION)
     if contrast is not None and contrast.strip():
         lines = contrast.splitlines()
         has_row = any(line.lstrip().startswith("|") for line in lines)
         has_separator = any(TABLE_SEPARATOR_RE.match(line) and "-" in line for line in lines)
         if not (has_row and has_separator):
-            errors.append(f"la sección '{EXPECTED_HEADINGS[3]}' debe contener una tabla markdown")
+            errors.append(f"la sección '{CONTRAST_SECTION}' debe contener una tabla markdown")
 
-    diagram = sections.get(EXPECTED_HEADINGS[4])
+    diagram = sections.get(DIAGRAM_SECTION)
     if diagram is not None and diagram.strip():
         if not any(line.strip().startswith("```mermaid") for line in diagram.splitlines()):
-            errors.append(f"la sección '{EXPECTED_HEADINGS[4]}' debe contener un bloque ```mermaid")
+            errors.append(f"la sección '{DIAGRAM_SECTION}' debe contener un bloque ```mermaid")
 
-    quiz = sections.get(EXPECTED_HEADINGS[6])
+    quiz = sections.get(QUIZ_SECTION)
     if quiz is not None and quiz.strip():
         questions = sum(1 for line in quiz.splitlines() if QUESTION_RE.match(line))
         if questions != 3:
             errors.append(
-                f"la sección '{EXPECTED_HEADINGS[6]}' debe tener exactamente 3 preguntas numeradas "
+                f"la sección '{QUIZ_SECTION}' debe tener exactamente 3 preguntas numeradas "
                 f"(tiene {questions})"
             )
         details = quiz.count("<details>")
         if details < 3:
             errors.append(
-                f"la sección '{EXPECTED_HEADINGS[6]}' necesita al menos 3 bloques <details> "
+                f"la sección '{QUIZ_SECTION}' necesita al menos 3 bloques <details> "
                 f"con la respuesta (tiene {details})"
             )
 
-    sources = sections.get(EXPECTED_HEADINGS[9])
+    sources = sections.get(SOURCES_SECTION)
     if sources is not None and sources.strip():
         links = len(LINK_RE.findall(sources))
         bare = len(BARE_URL_RE.findall(LINK_RE.sub("", sources)))
         if links + bare < 2:
             errors.append(
-                f"la sección '{EXPECTED_HEADINGS[9]}' necesita al menos 2 enlaces (tiene {links + bare})"
+                f"la sección '{SOURCES_SECTION}' necesita al menos 2 enlaces (tiene {links + bare})"
             )
     return errors
 
 
-def _validate_body(body: str) -> list[str]:
+def _validate_body(body: str, glossary: list[str]) -> list[str]:
     errors: list[str] = []
     lines = body.splitlines()
     headings = _heading_lines(lines)
@@ -284,7 +334,7 @@ def _validate_body(body: str) -> list[str]:
             continue
         end = headings[position + 1][0] if position + 1 < len(headings) else len(lines)
         sections[heading] = "\n".join(lines[index + 1:end])
-    errors.extend(_validate_sections(sections))
+    errors.extend(_validate_sections(sections, glossary))
 
     words = len(_strip_fenced_blocks(body).split())
     if words > MAX_WORDS:
@@ -472,9 +522,11 @@ def validate_file(path: Path | str) -> list[str]:
         meta = parse_frontmatter(block)
     except FrontmatterError as exc:
         return [str(exc)]
+    glossary = meta.get("glosario")
+    glossary = [item for item in glossary if item.strip()] if isinstance(glossary, list) else []
     return (
         _validate_frontmatter(meta, path)
-        + _validate_body(body)
+        + _validate_body(body, glossary)
         + _validate_style(body, _body_first_line(text))
     )
 

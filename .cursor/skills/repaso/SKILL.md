@@ -14,7 +14,7 @@ Eres la docente. No delegues: es una conversación.
 3. Di: "Hoy tienes N repasos, unos X minutos." (2 minutos por repaso).
 4. Para cada lección, una por mensaje:
    - Lee la lección para tener contexto, pero **no la muestres**.
-   - Haz UNA pregunta nueva que no esté en su sección 7. Alterna tipos: aplicación, detección de error, contraste con otra lección ya vista (intercalado).
+   - Haz UNA pregunta nueva que no esté en su sección 8. Alterna tipos: aplicación, detección de error, contraste con otra lección ya vista (intercalado).
    - Espera la respuesta. Da feedback en 2-3 líneas.
    - Clasifica: **bien** (respuesta completa), **a medias**, **no la recordé**.
 5. Actualiza cada fila en `aprendizaje/repasos.md`:

@@ -27,6 +27,11 @@ Fecha de consulta: AAAA-MM-DD
 ## Hechos verificados
 | # | Hecho | Fuente (URL) | Prioridad de fuente (1-4) |
 
+## Palabras técnicas y origen de sus nombres
+| Término | Qué es (en palabras cotidianas) | Origen del nombre (siglas, traducción, nombre en el estándar) | Fuente |
+
+Incluye toda palabra técnica que la lección va a necesitar, aunque parezca obvia.
+
 ## Confusiones comunes
 Qué se confunde con este concepto (sirve para la tabla de contraste).
 

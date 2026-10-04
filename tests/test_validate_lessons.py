@@ -30,18 +30,34 @@ glosario: [DNS, servidor]
 ---
 """
 
+def glossary_entry(term, labels=("Qué es", "Por qué se llama así", "Ejemplo")):
+    texts = {
+        "Qué es": "una pieza del sistema.",
+        "Por qué se llama así": "viene de una palabra en inglés.",
+        "Ejemplo": "lo usas cada día.",
+    }
+    lines = [f"### {term}"] + [f"**{label}:** {texts[label]}" for label in labels]
+    return "\n\n".join(lines)
+
+
+GLOSSARY_SECTION = "\n\n".join([
+    glossary_entry("DNS (Domain Name System)"),
+    glossary_entry("Servidor (server)"),
+])
+
 SECTIONS = {
     "## 1. El gancho": "Escribes una dirección y en un segundo aparece una página.",
     "## 2. La idea en una frase": "El navegador pide la página a un servidor y la dibuja.",
-    "## 3. La analogía": "Es como pedir comida a domicilio con una dirección.",
-    "## 4. Contraste": (
+    "## 3. Las palabras nuevas": GLOSSARY_SECTION,
+    "## 4. La analogía": "Es como pedir comida a domicilio con una dirección.",
+    "## 5. Contraste": (
         "| Sin DNS | Con DNS |\n"
         "| :-- | :-- |\n"
         "| Recuerdas números | Recuerdas nombres |"
     ),
-    "## 5. Diagrama": "```mermaid\nflowchart LR\n  A[Navegador] --> B[DNS]\n```",
-    "## 6. Bueno vs. malo": "Bueno: usar HTTPS. Malo: ignorar el candado.",
-    "## 7. Ponte a prueba": (
+    "## 6. Diagrama": "```mermaid\nflowchart LR\n  A[Navegador] --> B[DNS]\n```",
+    "## 7. Bueno vs. malo": "Bueno: usar HTTPS. Malo: ignorar el candado.",
+    "## 8. Ponte a prueba": (
         "1. ¿Qué hace el DNS?\n"
         "<details><summary>Respuesta</summary>Traduce nombres a IP.</details>\n\n"
         "2. ¿Quién dibuja la página?\n"
@@ -49,9 +65,9 @@ SECTIONS = {
         "3. ¿Qué protege HTTPS?\n"
         "<details><summary>Respuesta</summary>La conexión.</details>"
     ),
-    "## 8. Mini ejercicio": "Abre las herramientas de desarrollo y mira la pestaña Red.",
-    "## 9. Cómo te ayuda a revisar a la IA": "Si la IA dice que el DNS guarda páginas, sabrás que se equivoca.",
-    "## 10. Fuentes": (
+    "## 9. Mini ejercicio": "Abre las herramientas de desarrollo y mira la pestaña Red.",
+    "## 10. Cómo te ayuda a revisar a la IA": "Si la IA dice que el DNS guarda páginas, sabrás que se equivoca.",
+    "## 11. Fuentes": (
         "- [MDN](https://developer.mozilla.org/)\n"
         "- [Cloudflare](https://www.cloudflare.com/learning/dns/what-is-dns/)"
     ),
@@ -92,7 +108,7 @@ def test_valid_lesson_has_no_errors(tmp_path):
         ("nivel: 1", "nivel: 2", "no coincide con el nivel del id"),
         ("nivel: 1", "nivel: 9", "'nivel' debe ser"),
         ("duracion_min: 10", "duracion_min: 4", "'duracion_min'"),
-        ("duracion_min: 10", "duracion_min: 21", "'duracion_min'"),
+        ("duracion_min: 10", "duracion_min: 26", "'duracion_min'"),
         ("estado: borrador", "estado: publicada", "'estado' debe ser"),
         ("prerequisitos: []", "prerequisitos: [N1-M1-L01, tema-previo]", "prerrequisito no válido"),
         ("  - https://www.cloudflare.com/learning/dns/what-is-dns/\n", "", "al menos 2 elementos"),
@@ -124,9 +140,9 @@ def test_missing_frontmatter(tmp_path):
 
 
 def test_missing_heading(tmp_path):
-    sections = {k: v for k, v in SECTIONS.items() if k != "## 8. Mini ejercicio"}
+    sections = {k: v for k, v in SECTIONS.items() if k != "## 9. Mini ejercicio"}
     errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
-    assert any("falta el encabezado '## 8. Mini ejercicio'" in error for error in errors), errors
+    assert any("falta el encabezado '## 9. Mini ejercicio'" in error for error in errors), errors
 
 
 def test_wrong_heading_order(tmp_path):
@@ -137,17 +153,17 @@ def test_wrong_heading_order(tmp_path):
 
 
 def test_empty_section(tmp_path):
-    sections = with_section("## 6. Bueno vs. malo", "   ")
+    sections = with_section("## 7. Bueno vs. malo", "   ")
     errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
-    assert any("'## 6. Bueno vs. malo' está vacía" in error for error in errors), errors
+    assert any("'## 7. Bueno vs. malo' está vacía" in error for error in errors), errors
 
 
 @pytest.mark.parametrize(
     "heading, content, expected",
     [
-        ("## 4. Contraste", "Sin DNS recuerdas números; con DNS, nombres.", "tabla markdown"),
-        ("## 5. Diagrama", "```\nA --> B\n```", "```mermaid"),
-        ("## 10. Fuentes", "- [MDN](https://developer.mozilla.org/)", "al menos 2 enlaces"),
+        ("## 5. Contraste", "Sin DNS recuerdas números; con DNS, nombres.", "tabla markdown"),
+        ("## 6. Diagrama", "```\nA --> B\n```", "```mermaid"),
+        ("## 11. Fuentes", "- [MDN](https://developer.mozilla.org/)", "al menos 2 enlaces"),
     ],
 )
 def test_section_content_rules(tmp_path, heading, content, expected):
@@ -155,9 +171,42 @@ def test_section_content_rules(tmp_path, heading, content, expected):
     assert any(expected in error for error in errors), errors
 
 
+def test_glossary_section_needs_an_entry(tmp_path):
+    sections = with_section("## 3. Las palabras nuevas", "Aquí no hay entradas.")
+    errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
+    assert any("sección 3: necesita al menos una entrada" in error for error in errors), errors
+
+
+@pytest.mark.parametrize("missing", ["Qué es", "Por qué se llama así", "Ejemplo"])
+def test_glossary_entry_missing_label(tmp_path, missing):
+    labels = [label for label in ("Qué es", "Por qué se llama así", "Ejemplo") if label != missing]
+    content = "\n\n".join([glossary_entry("DNS", labels), glossary_entry("Servidor")])
+    errors = validate_file(write_lesson(tmp_path, build_lesson(with_section("## 3. Las palabras nuevas", content))))
+    assert errors == [f'sección 3: a "DNS" le falta "**{missing}:**"'], errors
+
+
+def test_glossary_term_without_entry(tmp_path):
+    content = glossary_entry("DNS (Domain Name System)")
+    errors = validate_file(write_lesson(tmp_path, build_lesson(with_section("## 3. Las palabras nuevas", content))))
+    assert errors == ['sección 3: el término del glosario "servidor" no tiene explicación'], errors
+
+
+def test_glossary_match_ignores_case_and_accents(tmp_path):
+    frontmatter = mutate(FRONTMATTER, "glosario: [DNS, servidor]", 'glosario: ["Dirección IP"]')
+    content = glossary_entry("direccion ip (IP address)")
+    sections = with_section("## 3. Las palabras nuevas", content)
+    assert validate_file(write_lesson(tmp_path, build_lesson(sections, frontmatter))) == []
+
+
+def test_glossary_heading_in_code_fence_is_not_an_entry(tmp_path):
+    content = glossary_entry("DNS") + "\n\n```text\n### servidor\n```"
+    errors = validate_file(write_lesson(tmp_path, build_lesson(with_section("## 3. Las palabras nuevas", content))))
+    assert 'sección 3: el término del glosario "servidor" no tiene explicación' in errors, errors
+
+
 def test_bare_urls_count_as_sources(tmp_path):
     content = "- https://developer.mozilla.org/\n- https://www.cloudflare.com/"
-    sections = with_section("## 10. Fuentes", content)
+    sections = with_section("## 11. Fuentes", content)
     assert validate_file(write_lesson(tmp_path, build_lesson(sections))) == []
 
 
@@ -181,20 +230,33 @@ def _quiz(count, details=None):
     ],
 )
 def test_quiz_rules(tmp_path, quiz, expected):
-    sections = with_section("## 7. Ponte a prueba", quiz)
+    sections = with_section("## 8. Ponte a prueba", quiz)
     errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
     assert any(expected in error for error in errors), errors
 
 
 def test_too_many_words(tmp_path):
-    sections = with_section("## 1. El gancho", "palabra " * 1400)
+    sections = with_section("## 1. El gancho", "palabra " * 2200)
     errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
-    assert any("palabras; el máximo es 1400" in error for error in errors), errors
+    assert any("palabras; el máximo es 2200" in error for error in errors), errors
+
+
+def test_words_under_cap_are_ok(tmp_path):
+    sections = with_section("## 1. El gancho", "palabra " * 1800)
+    errors = validate_file(write_lesson(tmp_path, build_lesson(sections)))
+    assert not any("el máximo es" in error for error in errors), errors
+
+
+@pytest.mark.parametrize("duration, ok", [(25, True), (26, False)])
+def test_duration_upper_bound(tmp_path, duration, ok):
+    text = mutate(build_lesson(), "duracion_min: 10", f"duracion_min: {duration}")
+    errors = validate_file(write_lesson(tmp_path, text))
+    assert (errors == []) is ok, errors
 
 
 def test_fenced_code_does_not_count_as_words(tmp_path):
     long_code = "```mermaid\nflowchart LR\n" + "  A --> B\n" * 600 + "```"
-    sections = with_section("## 5. Diagrama", long_code)
+    sections = with_section("## 6. Diagrama", long_code)
     assert validate_file(write_lesson(tmp_path, build_lesson(sections))) == []
 
 
@@ -304,7 +366,7 @@ def test_banned_phrase_across_line_break(tmp_path, banned_file):
 
 def test_banned_phrase_in_code_fence_is_ignored(tmp_path, banned_file):
     content = "Mira el ejemplo.\n\n```text\nsin lugar a dudas\n```"
-    assert style_errors(tmp_path, with_section("## 8. Mini ejercicio", content)) == []
+    assert style_errors(tmp_path, with_section("## 9. Mini ejercicio", content)) == []
 
 
 def test_missing_banned_file_does_not_crash(tmp_path, monkeypatch):
@@ -315,14 +377,14 @@ def test_missing_banned_file_does_not_crash(tmp_path, monkeypatch):
 
 def test_long_paragraph(tmp_path, banned_file):
     content = "Una frase corta aquí. " * 21  # 84 words, short sentences
-    errors = style_errors(tmp_path, with_section("## 3. La analogía", content))
+    errors = style_errors(tmp_path, with_section("## 4. La analogía", content))
     assert any(e.startswith("estilo: párrafo de 84 palabras (máx. 80)") for e in errors), errors
     assert not any("frase de" in e for e in errors), errors
 
 
 def test_long_sentence(tmp_path, banned_file):
     content = "Corto. " + "palabra " * 41 + "final."
-    sections = with_section("## 3. La analogía", content)
+    sections = with_section("## 4. La analogía", content)
     errors = style_errors(tmp_path, sections)
     line = line_of(build_lesson(sections), "Corto.")
     assert errors == [f"estilo: frase de 42 palabras (máx. 40) en línea {line}"]
@@ -330,14 +392,14 @@ def test_long_sentence(tmp_path, banned_file):
 
 def test_long_sentence_in_list_item(tmp_path, banned_file):
     content = "- Uno corto.\n- " + "palabra " * 45 + "fin."
-    errors = style_errors(tmp_path, with_section("## 6. Bueno vs. malo", content))
+    errors = style_errors(tmp_path, with_section("## 7. Bueno vs. malo", content))
     assert any("frase de 46 palabras" in e for e in errors), errors
     assert not any("párrafo" in e for e in errors), errors
 
 
 def test_urls_and_inline_code_do_not_count_as_words(tmp_path, banned_file):
     content = "Mira " + "`a b c d e` " * 20 + "y https://example.com/x " * 15 + "fin."
-    assert style_errors(tmp_path, with_section("## 8. Mini ejercicio", content)) == []
+    assert style_errors(tmp_path, with_section("## 9. Mini ejercicio", content)) == []
 
 
 def test_too_many_em_dashes(tmp_path, banned_file):
@@ -351,7 +413,7 @@ def test_em_dashes_in_sources_are_ignored(tmp_path, banned_file):
         "- [MDN — Web](https://developer.mozilla.org/) — guía — base\n"
         "- [Cloudflare — DNS](https://www.cloudflare.com/) — intro"
     )
-    assert style_errors(tmp_path, with_section("## 10. Fuentes", content)) == []
+    assert style_errors(tmp_path, with_section("## 11. Fuentes", content)) == []
 
 
 def test_too_many_exclamations(tmp_path, banned_file):
@@ -373,4 +435,4 @@ def test_emojis_in_table_are_ignored(tmp_path, banned_file):
         "| ❌ ❌ | ✅ ✅ |\n"
         "| ⚠️ ⚠️ | ✅ ✅ |"
     )
-    assert style_errors(tmp_path, with_section("## 4. Contraste", content)) == []
+    assert style_errors(tmp_path, with_section("## 5. Contraste", content)) == []

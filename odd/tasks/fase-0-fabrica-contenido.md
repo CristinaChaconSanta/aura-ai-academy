@@ -50,6 +50,14 @@ Motivo: la usuaria pidió docente visible, investigación con Grok Bot, repo com
 - [x] T12 — Protocolo de calibración `docs/prueba-calibracion.md` (las "pruebas" para Cursor) y hoja de ruta con fases 2 = backend, 3 = frontend. Ruta: inline.
 - [x] T13 — Repo privado en GitHub y push de la rama. Ruta: inline. Autorizado por la usuaria.
 
+### Ronda 3 (feedback de la usuaria tras leer N1-M1-L01, 2026-10-03)
+Motivo: "no entendí parámetros, anclas, esquema; no sé de dónde vienen esos nombres; pueden ser más extensas, no asumir que entiendo todo". Pide además un chat en vivo con Grok Bot.
+
+- [x] T14 — Nueva sección obligatoria "Las palabras nuevas" (qué es, por qué se llama así, ejemplo) y límites más amplios (2.200 palabras, hasta 25 min). Validador: cada término del `glosario` debe tener su entrada en esa sección. Ruta: delegada (writer trigger: validador + tests).
+- [x] T15 — Plantilla, reglas, redactor, verificador y docente: regla "cero conocimiento previo". Ruta: inline (prompts).
+- [x] T16 — Reescribir N1-M1-L01 con el formato nuevo y el origen de cada nombre, con fuentes (RFC 3986, MDN). Ruta: inline (requiere fuentes).
+- [x] T17 — Grok Bot "Docente Aura" para preguntas en vivo (texto y voz), en `docs/grok-bot.md`. Ruta: inline (prompt).
+
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
 - Una lección de ejemplo pasa el validador.
@@ -67,6 +75,8 @@ Motivo: la usuaria pidió docente visible, investigación con Grok Bot, repo com
 - Pendiente: prueba real en Cursor (`/nueva-leccion N1-M1-L01`), solo la puede hacer la usuaria.
 
 - Ronda 2: T10 delegada (62 tests en verde). Lección de referencia N1-M1-L01 validada (OK); prueba manual: el validador detecta 2 frases prohibidas, 4 rayas y 2 exclamaciones en una copia alterada.
+
+- Ronda 3: T14 delegada; N1-M1-L01 reescrita (11 secciones, 11 términos con origen del nombre, 8 fuentes: MDN + RFC 3986). Validador OK; 72 tests en verde.
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.
