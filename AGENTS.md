@@ -1,0 +1,43 @@
+# AGENTS.md — Mapa del repositorio de Aura AI Academy
+
+Este archivo es un mapa, no un reglamento. Dice dónde está cada cosa y cuándo
+leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
+
+## 1. Antes de empezar
+
+1. Ejecuta `./init.sh`. Si sale con código distinto de 0, para y arréglalo.
+2. Lee el documento activo en `odd/tasks/` (estado real de la tarea).
+3. Trabaja una tarea a la vez; no abras la siguiente sin cerrar la actual.
+
+## 2. Mapa del repositorio
+
+| Archivo o carpeta | Qué contiene | Cuándo leerlo |
+|---|---|---|
+| `CLAUDE.md` | Identidad, propósito y arranque (carga en cada sesión) | Siempre |
+| `odd/tasks/` | Documentos de tarea (estado, checklist, evidencias) | Al empezar y al cerrar cada tarea |
+| `progress/` | `current.md` (sesión activa) e `history.md` (bitácora) | Al delegar o cerrar sesión |
+| `init.sh` | Puerta de inicio y cierre (entorno, archivos, pruebas, seguridad) | Al empezar y antes de dar algo por hecho |
+| `.claude/` | `harness.env`, `settings.json` y hooks | Al ajustar el arnés |
+| `.cursor/` | Regla del arnés y hook de cierre para Cursor | Al ajustar el arnés en Cursor |
+| `CHECKPOINTS.md` | Lista verificable de cierre | Antes de cerrar la sesión |
+| `docs/referencia/` | Documento original de Perplexity y su revisión | Solo como fuente de temas; contiene errores señalados en la revisión |
+
+## 3. Reglas duras
+
+- Ninguna tarea está terminada sin `./init.sh` en verde.
+- Cero secretos en commits: `.env` está en `.gitignore`.
+- Nunca inventar datos.
+
+## 4. Subagentes
+
+- El orquestador delega; los subagentes ejecutan una unidad acotada.
+- Cada subagente escribe su resultado en `progress/<tipo>_<tema>.md` y
+  responde solo `done -> progress/<archivo>` o `blocked -> <motivo>`.
+- El estado de las tareas vive en `odd/tasks/`, no en `progress/`.
+
+## 5. Cierre de sesión
+
+1. `./init.sh` en verde.
+2. Actualizar los checkboxes de `odd/tasks/` con evidencia (comando y resultado, hash de commit).
+3. Añadir una línea a `progress/history.md`.
+4. Commit por unidad de trabajo con Conventional Commits.

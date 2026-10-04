@@ -1,0 +1,24 @@
+# CHECKPOINTS — Verificación de cierre de Aura AI Academy
+
+Marca cada casilla solo con evidencia observada (comando y resultado).
+
+## C1 Arnés completo
+- [ ] `CLAUDE.md` tiene menos de 200 líneas
+- [ ] Existen `AGENTS.md`, `init.sh`, `CHECKPOINTS.md` y `.claude/settings.json`
+- [ ] `./init.sh` sale con código 0
+
+## C2 Estado coherente
+- [ ] Los checkboxes de `odd/tasks/` están marcados solo con evidencia
+- [ ] `progress/current.md` está vacío o describe la sesión activa
+
+## C3 Seguridad
+- [ ] Ningún secreto en git (`.env` ignorado)
+
+## C4 Verificación real
+- [ ] Cada módulo nuevo tiene pruebas
+- [ ] El comando de pruebas corre más de 0 pruebas y todas pasan
+- [ ] Ninguna prueba llama a APIs reales
+
+## C5 Cierre
+- [ ] `progress/history.md` tiene una entrada de la última sesión
+- [ ] Sin `print` de depuración ni archivos temporales sueltos
