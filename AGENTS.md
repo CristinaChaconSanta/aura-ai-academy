@@ -28,9 +28,11 @@ leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
 | `docs/como-usar.md` | Guía de uso en Cursor y prompts útiles | La aprendiz, al empezar |
 | `lecciones/N<k>/` | Lecciones (una por archivo) | Al estudiar o verificar |
 | `aprendizaje/` | Progreso, repasos espaciados, glosario, preguntas abiertas | En `/docente` y `/repaso` |
-| `.cursor/agents/` | Subagentes: `investigador`, `redactor`, `verificador` | Al ajustar el pipeline |
+| `.cursor/agents/` | Subagentes: `investigador`, `redactor`, `verificador`, `tallerista` | Al ajustar el pipeline |
 | `.cursor/rules/orquestador.mdc` | Rol del agente principal | Siempre (se aplica solo) |
-| `.cursor/skills/` | Flujos `/nueva-leccion`, `/docente`, `/repaso` | Al invocarlos |
+| `.cursor/skills/` | Flujos `/nueva-leccion`, `/docente`, `/repaso`, `/nuevo-taller`, `/taller` | Al invocarlos |
+| `talleres/` | Talleres de práctica por módulo; formato en `talleres/README.md` | Al crear o resolver un taller |
+| `tests/test_talleres.py` | Corre cada taller contra su solución de referencia | Después de crear un taller |
 | `scripts/validate_lessons.py` | Valida formato y estilo de las lecciones | Después de escribir una lección |
 | `docs/frases-prohibidas.txt` | Frases típicas de IA que el validador rechaza | Al redactar; agrega frases nuevas aquí |
 | `docs/grok-bot.md` | Grok Bot como investigador vía la rama `investigacion` | Al configurar o depurar la investigación |

@@ -58,6 +58,12 @@ Motivo: "no entendí parámetros, anclas, esquema; no sé de dónde vienen esos 
 - [x] T16 — Reescribir N1-M1-L01 con el formato nuevo y el origen de cada nombre, con fuentes (RFC 3986, MDN). Ruta: inline (requiere fuentes).
 - [x] T17 — Grok Bot "Docente Aura" para preguntas en vivo (texto y voz), en `docs/grok-bot.md`. Ruta: inline (prompt).
 
+### Ronda 4 (talleres, aprobada por la usuaria el 2026-10-03)
+Motivo: leer sobre código no enseña a codear; hace falta práctica con resultado visible.
+
+- [x] T18 — Mini biblioteca de pruebas (Node + navegador), primer taller `N1-M1-T` "Desarma una URL" con solución de referencia, y test del arnés que corre cada taller contra su referencia. Ruta: delegada (writer trigger: varios archivos de código).
+- [x] T19 — Prompts: subagente `tallerista`, skills `/taller` y `/nuevo-taller`, `talleres/README.md`, filas de taller en la malla, `como-usar.md` y `AGENTS.md`. Ruta: inline (prompts).
+
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
 - Una lección de ejemplo pasa el validador.
@@ -77,6 +83,8 @@ Motivo: "no entendí parámetros, anclas, esquema; no sé de dónde vienen esos 
 - Ronda 2: T10 delegada (62 tests en verde). Lección de referencia N1-M1-L01 validada (OK); prueba manual: el validador detecta 2 frases prohibidas, 4 rayas y 2 exclamaciones en una copia alterada.
 
 - Ronda 3: T14 delegada; N1-M1-L01 reescrita (11 secciones, 11 términos con origen del nombre, 8 fuentes: MDN + RFC 3986). Validador OK; 72 tests en verde.
+
+- Ronda 4: T18 delegada; referencia 10/10, archivo inicial 0/10 con mensajes legibles; verificado en navegador ("0 de 10 pruebas pasan"). 33 filas de taller en la malla. 75 tests en verde.
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.

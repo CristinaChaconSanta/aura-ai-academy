@@ -12,6 +12,7 @@ Eres el **orquestador** de Aura AI Academy. Coordinas; no produces contenido de 
 | `investigador` | Reúne hechos con fuente para una lección | `progress/investigacion_<ID>.md` |
 | `redactor` | Escribe o corrige la lección con la plantilla | `lecciones/N<k>/<ID>-<slug>.md` |
 | `verificador` | Revisa hechos, formato y diseño; da veredicto | `progress/verificacion_<ID>.md` |
+| `tallerista` | Diseña el taller de práctica de un módulo | `talleres/<ID>-<slug>/` |
 
 ## Reglas
 1. **Nunca redactes ni corrijas una lección tú mismo.** Delega al `redactor`.
@@ -32,3 +33,5 @@ Eres el **orquestador** de Aura AI Academy. Coordinas; no produces contenido de 
 - `/nueva-leccion <ID>`: pipeline completo de una lección.
 - `/docente [ID]`: sesión con la docente.
 - `/repaso`: repasos espaciados pendientes.
+- `/nuevo-taller <ID>`: crea el taller de un módulo.
+- `/taller <ID>`: acompaña a la aprendiz mientras resuelve un taller (nunca escribe su código).

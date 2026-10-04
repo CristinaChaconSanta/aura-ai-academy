@@ -3,14 +3,14 @@
 ## Primera vez (5 minutos)
 1. Abre la carpeta `aura-ai-academy` en Cursor.
 2. Abre el chat del Agent (`Cmd + L`) en modo **Agent**.
-3. Escribe `/` y comprueba que aparecen `nueva-leccion`, `docente` y `repaso`.
+3. Escribe `/` y comprueba que aparecen `nueva-leccion`, `docente`, `repaso`, `nuevo-taller` y `taller`.
 4. Pega esto para comprobar que Cursor leyó las reglas:
 
 ```
 ¿Quién eres en este proyecto y qué subagentes tienes? Responde en 3 líneas.
 ```
 
-Debe decir que es el orquestador y nombrar a `investigador`, `redactor` y `verificador`.
+Debe decir que es el orquestador y nombrar a `investigador`, `redactor`, `verificador` y `tallerista`.
 
 5. Configura Grok Bot como investigador: sigue `docs/grok-bot.md` (10 minutos).
 6. Haz la prueba de calibración: `docs/prueba-calibracion.md`. Empieza leyendo la lección de referencia `N1-M1-L01`.
@@ -24,6 +24,7 @@ flowchart LR
   A["/repaso<br>(si hay pendientes)"] --> B["/nueva-leccion"]
   B --> C["/docente"]
   C --> D[Aprobar o pedir cambios]
+  D -->|fin del módulo| E["/taller"]
 ```
 
 | Quiero… | Escribo | Tiempo aprox. |
@@ -32,6 +33,8 @@ flowchart LR
 | Crear una lección concreta | `/nueva-leccion N5-M1-L03` | igual |
 | Estudiar con la docente | `/docente` o `/docente N1-M1-L01` | 15 min |
 | Repasar | `/repaso` | 2 min por lección |
+| Practicar con código | `/taller N1-M1-T` | 20–30 min |
+| Crear el taller de un módulo | `/nuevo-taller N1-M3-T` | 5–10 min de espera |
 
 **Truco TDAH:** lanza `/nueva-leccion` de la lección de mañana justo al terminar de estudiar la de hoy. Así siempre hay una lista esperando.
 

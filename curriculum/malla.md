@@ -4,7 +4,8 @@
 
 **Formato de ID:** `N<nivel>-M<módulo>-L<lección>` (ej. `N1-M2-L03`).
 **Estados:** ⬜ pendiente · 📝 borrador · 🔎 verificada · ✅ aprobada (solo la aprendiz marca ✅).
-**Regla:** una lección = un concepto = 10–15 minutos.
+**Regla:** una lección = un concepto = 15–25 minutos.
+**Talleres:** cada módulo cierra con un taller `N<k>-M<m>-T` (ver `talleres/README.md`). 🛠️ = práctica con tus manos.
 
 ## Mapa de niveles
 
@@ -34,6 +35,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M1-L05 | HTTPS y certificados | ⬜ |
 | N1-M1-L06 | APIs y endpoints | ⬜ |
 | N1-M1-L07 | JSON: el idioma de las APIs | ⬜ |
+| N1-M1-T | 🛠️ Taller del módulo | 🔎 |
 
 ### N1-M2 · El computador por dentro
 | ID | Lección | Estado |
@@ -43,6 +45,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M2-L03 | Procesos y puertos (qué es `localhost:3000`) | ⬜ |
 | N1-M2-L04 | La terminal: por qué existe y los 10 comandos básicos | ⬜ |
 | N1-M2-L05 | Variables de entorno y secretos | ⬜ |
+| N1-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N1-M3 · Pensar como programa
 | ID | Lección | Estado |
@@ -55,6 +58,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M3-L06 | Listas y diccionarios | ⬜ |
 | N1-M3-L07 | Errores, excepciones y cómo leer un stack trace | ⬜ |
 | N1-M3-L08 | Descomponer un problema antes de pedírselo a la IA | ⬜ |
+| N1-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N1-M4 · Lenguajes y paradigmas
 | ID | Lección | Estado |
@@ -67,6 +71,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M4-L06 | Programación funcional | ⬜ |
 | N1-M4-L07 | Programación orientada a eventos | ⬜ |
 | N1-M4-L08 | Librería, framework, SDK y dependencia | ⬜ |
+| N1-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N1-M5 · Estructuras de datos por intuición
 | ID | Lección | Estado |
@@ -75,6 +80,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M5-L02 | Árboles | ⬜ |
 | N1-M5-L03 | Grafos: la estructura de datos | ⬜ |
 | N1-M5-L04 | Big-O por intuición: por qué algo es lento con 10.000 usuarios | ⬜ |
+| N1-M5-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N1-M6 · La web en el navegador
 | ID | Lección | Estado |
@@ -84,6 +90,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N1-M6-L03 | JavaScript en el navegador y el DOM | ⬜ |
 | N1-M6-L04 | Cómo el navegador convierte código en píxeles | ⬜ |
 | N1-M6-L05 | Asincronía y el event loop | ⬜ |
+| N1-M6-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -100,6 +107,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N2-M1-L06 | Merge y conflictos | ⬜ |
 | N2-M1-L07 | CI/CD: robots que prueban y publican | ⬜ |
 | N2-M1-L08 | Entornos: desarrollo, staging, producción | ⬜ |
+| N2-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N2-M2 · Calidad
 | ID | Lección | Estado |
@@ -110,6 +118,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N2-M2-L04 | Debugging: método científico para errores | ⬜ |
 | N2-M2-L05 | Leer código que no escribiste | ⬜ |
 | N2-M2-L06 | Señales de que la IA la está cagando | ⬜ |
+| N2-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N2-M3 · Metodologías
 | ID | Lección | Estado |
@@ -121,6 +130,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N2-M3-L05 | DDD: el código habla el idioma del negocio | ⬜ |
 | N2-M3-L06 | Spec-driven development con agentes | ⬜ |
 | N2-M3-L07 | Métricas DORA | ⬜ |
+| N2-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N2-M4 · Producto antes que código
 | ID | Lección | Estado |
@@ -129,6 +139,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N2-M4-L02 | Historias de usuario y criterios de aceptación | ⬜ |
 | N2-M4-L03 | PRD: el documento de requisitos | ⬜ |
 | N2-M4-L04 | Alcance: qué NO va en la versión 1 | ⬜ |
+| N2-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N2-M5 · Arquitectura de software
 | ID | Lección | Estado |
@@ -137,6 +148,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N2-M5-L02 | Separación de responsabilidades y capas | ⬜ |
 | N2-M5-L03 | Monolito vs. microservicios | ⬜ |
 | N2-M5-L04 | Diseño de APIs (REST) | ⬜ |
+| N2-M5-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -151,6 +163,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N3-M1-L04 | SaaS y aplicaciones con login | ⬜ |
 | N3-M1-L05 | Marketplace: por qué es más difícil que una tienda | ⬜ |
 | N3-M1-L06 | Dashboards y portales internos | ⬜ |
+| N3-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N3-M2 · Frontend
 | ID | Lección | Estado |
@@ -162,6 +175,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N3-M2-L05 | Accesibilidad (WCAG) | ⬜ |
 | N3-M2-L06 | Rendimiento y Core Web Vitals | ⬜ |
 | N3-M2-L07 | SEO técnico | ⬜ |
+| N3-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N3-M3 · Backend y datos
 | ID | Lección | Estado |
@@ -177,6 +191,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N3-M3-L09 | Subida y almacenamiento de archivos | ⬜ |
 | N3-M3-L10 | Correo transaccional (SPF, DKIM, DMARC) | ⬜ |
 | N3-M3-L11 | Concurrencia: dos personas compran el último producto | ⬜ |
+| N3-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N3-M4 · Usuarios y permisos
 | ID | Lección | Estado |
@@ -188,6 +203,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N3-M4-L05 | Roles y permisos (RBAC) | ⬜ |
 | N3-M4-L06 | Row Level Security | ⬜ |
 | N3-M4-L07 | Multi-tenancy | ⬜ |
+| N3-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -204,6 +220,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N4-M1-L06 | Suscripciones | ⬜ |
 | N4-M1-L07 | Pagos divididos en marketplaces | ⬜ |
 | N4-M1-L08 | Contexto Colombia: pasarelas, PSE, DIAN y Ley 1581 | ⬜ |
+| N4-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N4-M2 · Seguridad web
 | ID | Lección | Estado |
@@ -216,6 +233,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N4-M2-L06 | CORS y CSRF | ⬜ |
 | N4-M2-L07 | Rate limiting | ⬜ |
 | N4-M2-L08 | Cadena de suministro y dependencias | ⬜ |
+| N4-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N4-M3 · Nube
 | ID | Lección | Estado |
@@ -230,6 +248,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N4-M3-L08 | IAM y mínimo privilegio | ⬜ |
 | N4-M3-L09 | Infraestructura como código | ⬜ |
 | N4-M3-L10 | Costos de nube y alertas de facturación | ⬜ |
+| N4-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N4-M4 · Operación
 | ID | Lección | Estado |
@@ -241,6 +260,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N4-M4-L05 | Backups y restauración | ⬜ |
 | N4-M4-L06 | Incidentes y postmortems | ⬜ |
 | N4-M4-L07 | Caché y CDN | ⬜ |
+| N4-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -257,6 +277,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N5-M1-L06 | Transformer y atención | ⬜ |
 | N5-M1-L07 | Ventana de contexto y context rot | ⬜ |
 | N5-M1-L08 | Temperatura y muestreo | ⬜ |
+| N5-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N5-M2 · Cómo se entrena
 | ID | Lección | Estado |
@@ -266,6 +287,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N5-M2-L03 | RLHF, RLAIF y Constitutional AI | ⬜ |
 | N5-M2-L04 | Entrenamiento vs. inferencia | ⬜ |
 | N5-M2-L05 | Modelos de razonamiento | ⬜ |
+| N5-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N5-M3 · El ecosistema de modelos
 | ID | Lección | Estado |
@@ -275,6 +297,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N5-M3-L03 | Modelos abiertos vs. cerrados | ⬜ |
 | N5-M3-L04 | Por qué los benchmarks engañan | ⬜ |
 | N5-M3-L05 | Costo y latencia: elegir modelo | ⬜ |
+| N5-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N5-M4 · Límites y riesgos
 | ID | Lección | Estado |
@@ -283,6 +306,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N5-M4-L02 | Sesgos | ⬜ |
 | N5-M4-L03 | Privacidad y datos de entrenamiento | ⬜ |
 | N5-M4-L04 | El cambio de paradigma: del SDLC al ciclo de vida de agentes | ⬜ |
+| N5-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -297,6 +321,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M1-L04 | Skills, subagentes y hooks | ⬜ |
 | N6-M1-L05 | Few-shot y salida estructurada | ⬜ |
 | N6-M1-L06 | Prompting vs. RAG vs. fine-tuning | ⬜ |
+| N6-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M2 · Anatomía de un agente
 | ID | Lección | Estado |
@@ -308,6 +333,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M2-L05 | Diseñar buenas herramientas | ⬜ |
 | N6-M2-L06 | Memoria: corto, largo plazo, episódica y semántica | ⬜ |
 | N6-M2-L07 | Límites de pasos y de costo | ⬜ |
+| N6-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M3 · Patrones
 | ID | Lección | Estado |
@@ -320,6 +346,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M3-L06 | Evaluator-Optimizer | ⬜ |
 | N6-M3-L07 | Orchestrator-Workers | ⬜ |
 | N6-M3-L08 | Combinar patrones y cuándo NO usar un agente | ⬜ |
+| N6-M3-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M4 · Conocimiento
 | ID | Lección | Estado |
@@ -331,6 +358,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M4-L05 | Knowledge graphs | ⬜ |
 | N6-M4-L06 | GraphRAG | ⬜ |
 | N6-M4-L07 | Las tres caras de "grafo" | ⬜ |
+| N6-M4-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M5 · Herramientas del AI Engineer
 | ID | Lección | Estado |
@@ -342,6 +370,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M5-L05 | Otros frameworks: LlamaIndex, CrewAI, Agent SDKs | ⬜ |
 | N6-M5-L06 | No-code: n8n y Make como capa determinística | ⬜ |
 | N6-M5-L07 | Modelos locales | ⬜ |
+| N6-M5-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M6 · Calidad y producción
 | ID | Lección | Estado |
@@ -353,6 +382,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M6-L05 | Versionar prompts | ⬜ |
 | N6-M6-L06 | UX de productos con IA | ⬜ |
 | N6-M6-L07 | Costos de tokens y caché de prompts | ⬜ |
+| N6-M6-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N6-M7 · Seguridad de IA
 | ID | Lección | Estado |
@@ -364,6 +394,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N6-M7-L05 | Slopsquatting y paquetes inventados | ⬜ |
 | N6-M7-L06 | Riesgos de MCP servers | ⬜ |
 | N6-M7-L07 | Sandboxing y guardrails | ⬜ |
+| N6-M7-T | 🛠️ Taller del módulo | ⬜ |
 
 ---
 
@@ -378,6 +409,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N7-M1-L04 | Business case y ROI | ⬜ |
 | N7-M1-L05 | Build vs. buy | ⬜ |
 | N7-M1-L06 | Datos como base: calidad y gobierno de datos | ⬜ |
+| N7-M1-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N7-M2 · Gobernanza y regulación
 | ID | Lección | Estado |
@@ -390,6 +422,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N7-M2-L06 | Propiedad intelectual y copyright | ⬜ |
 | N7-M2-L07 | Gestión de proveedores de modelos | ⬜ |
 | N7-M2-L08 | Incidentes de IA | ⬜ |
+| N7-M2-T | 🛠️ Taller del módulo | ⬜ |
 
 ### N7-M3 · Personas y cambio
 | ID | Lección | Estado |
@@ -400,3 +433,4 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 | N7-M3-L04 | Equipos híbridos: humanos + agentes | ⬜ |
 | N7-M3-L05 | Medir adopción y valor | ⬜ |
 | N7-M3-L06 | Presentar a la junta directiva | ⬜ |
+| N7-M3-T | 🛠️ Taller del módulo | ⬜ |
