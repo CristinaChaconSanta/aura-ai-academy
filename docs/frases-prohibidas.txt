@@ -1,0 +1,61 @@
+# Frases típicas de texto generado por IA. Una por línea, sin distinguir mayúsculas.
+# El validador rechaza una lección si alguna aparece fuera de bloques de código.
+# Las líneas que empiezan con # son comentarios. Agrega frases cuando detectes nuevas.
+
+# Inflación y grandilocuencia
+en el vertiginoso mundo
+en el mundo actual
+en la era digital
+panorama en constante evolución
+un antes y un después
+juega un papel crucial
+juega un papel fundamental
+desempeña un papel clave
+es un testimonio de
+sienta las bases
+sin lugar a dudas
+revolucionario
+apasionante
+fascinante mundo
+
+# Muletillas de chatbot
+¡excelente pregunta
+¡buena pregunta
+espero que esto te ayude
+no dudes en
+¡claro que sí
+¡por supuesto
+¡manos a la obra
+¡vamos allá
+sumérgete
+adentrémonos
+exploremos juntos
+en este viaje
+emocionante viaje
+
+# Relleno
+es importante destacar que
+cabe destacar que
+es importante mencionar que
+vale la pena mencionar
+es crucial entender
+en resumen,
+en conclusión,
+dicho esto,
+en definitiva,
+a fin de cuentas
+
+# Atribuciones vagas
+los expertos afirman
+los expertos coinciden
+según los expertos
+diversos estudios demuestran
+se dice que
+
+# Calcos del inglés
+no solo se trata de
+no es solo
+aprovechar al máximo
+llevar al siguiente nivel
+de manera fluida
+robusto y escalable

@@ -39,6 +39,17 @@ Fuera de alcance: app web, base de datos, despliegue (fases 1–4).
 - [x] T5 — Validador `scripts/validate_lessons.py` + tests. Ruta: delegada (writer trigger: 2 archivos no triviales de código, especificación cerrada).
 - [x] T6 — Archivos de aprendizaje (`aprendizaje/`), glosario y guía de uso `docs/como-usar.md`; actualizar `AGENTS.md`. Ruta: inline.
 
+### Ronda 2 (aprobada por la usuaria el 2026-10-03)
+Motivo: la usuaria pidió docente visible, investigación con Grok Bot, repo compartido en GitHub y pruebas contra los "textos raros" de Cursor.
+
+- [x] T7 — Renombrar `/estudiar` a `/docente` y actualizar referencias. Ruta: inline (mecánico).
+- [x] T8 — Verificador con modelo de otra familia (`claude-opus-5`). Ruta: inline (1 línea).
+- [x] T9 — Integración con Grok Bot: `docs/grok-bot.md` (rutina de investigación + protocolo por rama `investigacion`) y paso 1 de `/nueva-leccion` que usa esa investigación si existe. Ruta: inline (prompts).
+- [x] T10 — Controles de estilo en el validador: frases prohibidas (`docs/frases-prohibidas.txt`), largo de párrafo y de frase, rayas, exclamaciones, emojis. Ruta: delegada (writer trigger: validador + tests).
+- [x] T11 — Lección de referencia `N1-M1-L01` escrita y verificada con fuentes, para que el redactor imite el tono. Ruta: inline (requiere investigación con fuentes).
+- [x] T12 — Protocolo de calibración `docs/prueba-calibracion.md` (las "pruebas" para Cursor) y hoja de ruta con fases 2 = backend, 3 = frontend. Ruta: inline.
+- [ ] T13 — Repo privado en GitHub y push de la rama. Ruta: inline. Autorizado por la usuaria.
+
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
 - Una lección de ejemplo pasa el validador.
@@ -54,6 +65,8 @@ Fuera de alcance: app web, base de datos, despliegue (fases 1–4).
 - Esqueleto de la plantilla validado: `validate_lessons.py` → OK, EXIT=0.
 - T2–T6: commit de la rama `feat/fase-0-fabrica-contenido` (ver `git log`).
 - Pendiente: prueba real en Cursor (`/nueva-leccion N1-M1-L01`), solo la puede hacer la usuaria.
+
+- Ronda 2: T10 delegada (62 tests en verde). Lección de referencia N1-M1-L01 validada (OK); prueba manual: el validador detecta 2 frases prohibidas, 4 rayas y 2 exclamaciones en una copia alterada.
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.

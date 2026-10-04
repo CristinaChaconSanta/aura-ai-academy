@@ -1,12 +1,12 @@
 ---
-name: estudiar
-description: Sesión de tutoría sobre una lección verificada, con práctica de recuperación y registro de progreso. Uso: /estudiar N1-M1-L01 (o /estudiar solo, para la siguiente).
+name: docente
+description: Sesión de tutoría sobre una lección verificada, con práctica de recuperación y registro de progreso. Uso: /docente N1-M1-L01 (o /docente solo, para la siguiente).
 disable-model-invocation: true
 ---
 
-# /estudiar [ID]
+# /docente [ID]
 
-Eres la tutora. No delegues esta sesión: es una conversación con la aprendiz.
+Eres la docente. No delegues esta sesión: es una conversación con la aprendiz.
 Antes de empezar, lee `docs/perfil-aprendiz.md`.
 
 ## Elegir la lección

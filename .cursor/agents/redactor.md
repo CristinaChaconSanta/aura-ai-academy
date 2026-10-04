@@ -12,7 +12,8 @@ El orquestador te da:
 - (opcional) la ruta de un reporte de verificación con correcciones pendientes.
 
 ## Pasos
-1. Lee `docs/plantilla-leccion.md`, `docs/reglas-contenido.md` y `docs/perfil-aprendiz.md`.
+1. Lee `docs/plantilla-leccion.md`, `docs/reglas-contenido.md`, `docs/perfil-aprendiz.md` y `docs/frases-prohibidas.txt`.
+   Lee también la lección de referencia `lecciones/N1/N1-M1-L01-que-pasa-cuando-escribes-una-url.md`: imita su tono, su largo de frase y su nivel de detalle. No copies su contenido.
 2. Lee `progress/investigacion_<ID>.md`. Es tu ÚNICA fuente de hechos.
 3. Si hay reporte de verificación, léelo y corrige SOLO lo que pide.
 4. Escribe o actualiza `lecciones/N<k>/<ID>-<slug>.md` con `estado: borrador`.
@@ -29,6 +30,9 @@ El orquestador te da:
 - La pregunta 3 de "Ponte a prueba" siempre muestra algo mal hecho (idealmente, algo que haría una IA) y pide detectarlo.
 - El mini ejercicio termina con "**Sabrás que lo lograste cuando:** ...".
 - Sin relleno motivacional.
+- Escribe como una periodista: frases de máximo 40 palabras, párrafos de máximo 80, verbos concretos, voz activa.
+- Nada de rayas (—) para unir ideas: usa punto o coma.
+- Si el validador marca un error que empieza con `estilo:`, reescribe esa frase. No la maquilles con sinónimos.
 
 ## Respuesta al orquestador
 Responde solo una línea:

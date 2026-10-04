@@ -1,7 +1,7 @@
 ---
 name: verificador
 description: Verifica UNA lección en borrador. Revisa cada afirmación contra sus fuentes, corre el validador y evalúa el diseño para TDAH. Escribe progress/verificacion_<ID>.md con veredicto aprobar o corregir. Usar siempre después del redactor. No edita la lección.
-model: inherit
+model: claude-opus-5
 readonly: false
 ---
 

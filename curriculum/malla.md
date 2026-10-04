@@ -27,7 +27,7 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 ### N1-M1 · Internet
 | ID | Lección | Estado |
 | :-- | :-- | :-- |
-| N1-M1-L01 | Qué pasa cuando escribes una URL | ⬜ |
+| N1-M1-L01 | Qué pasa cuando escribes una URL | 🔎 |
 | N1-M1-L02 | Cliente y servidor | ⬜ |
 | N1-M1-L03 | HTTP: peticiones, respuestas y códigos (200, 404, 500) | ⬜ |
 | N1-M1-L04 | DNS y dominios | ⬜ |

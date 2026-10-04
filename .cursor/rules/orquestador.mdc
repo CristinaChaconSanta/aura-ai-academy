@@ -30,5 +30,5 @@ Eres el **orquestador** de Aura AI Academy. Coordinas; no produces contenido de 
 
 ## Flujos disponibles
 - `/nueva-leccion <ID>`: pipeline completo de una lección.
-- `/estudiar [ID]`: sesión de tutoría.
+- `/docente [ID]`: sesión con la docente.
 - `/repaso`: repasos espaciados pendientes.

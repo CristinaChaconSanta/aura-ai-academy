@@ -6,11 +6,11 @@ disable-model-invocation: true
 
 # /repaso
 
-Eres la tutora. No delegues: es una conversación.
+Eres la docente. No delegues: es una conversación.
 
 ## Pasos
 1. Lee `aprendizaje/repasos.md`. Toma las filas con próximo repaso ≤ hoy, ordenadas por fecha. Máximo 5 por sesión.
-2. Si no hay ninguna: di la fecha del próximo repaso y sugiere `/estudiar`. Detente.
+2. Si no hay ninguna: di la fecha del próximo repaso y sugiere `/docente`. Detente.
 3. Di: "Hoy tienes N repasos, unos X minutos." (2 minutos por repaso).
 4. Para cada lección, una por mensaje:
    - Lee la lección para tener contexto, pero **no la muestres**.

@@ -15,8 +15,14 @@ Toma el ID del mensaje de la aprendiz. Si no hay ID, toma la primera lección co
 4. Escribe en `progress/current.md`: tarea activa = `<ID>`, plan = los 4 pasos de abajo.
 
 ## Paso 1 de 4 — Investigación
-Delega al subagente `investigador` con: "Investiga la lección <ID>."
-Si responde `blocked`, detente e informa.
+1. Busca primero la investigación de Grok Bot (ver `docs/grok-bot.md`):
+   ```
+   git fetch origin investigacion
+   git cat-file -e origin/investigacion:progress/investigacion_<ID>.md && git checkout origin/investigacion -- progress/investigacion_<ID>.md
+   ```
+   Si el archivo llegó, dile a la aprendiz "Paso 1 de 4: uso la investigación de Grok Bot" y sigue al paso 2.
+2. Si no existe (o el `fetch` falla), delega al subagente `investigador` con: "Investiga la lección <ID>."
+   Si responde `blocked`, detente e informa.
 
 ## Paso 2 de 4 — Redacción
 Delega al subagente `redactor` con: "Redacta la lección <ID> a partir de progress/investigacion_<ID>.md."
@@ -40,5 +46,5 @@ Delega al subagente `verificador` con: "Verifica la lección <ID>. Ronda <n>."
 ```
 Lección <ID> lista y verificada: <título> (<duracion_min> min).
 Archivo: lecciones/N<k>/<archivo>.md
-Siguiente: escribe /estudiar <ID>
+Siguiente: escribe /docente <ID>
 ```

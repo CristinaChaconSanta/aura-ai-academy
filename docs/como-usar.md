@@ -3,7 +3,7 @@
 ## Primera vez (5 minutos)
 1. Abre la carpeta `aura-ai-academy` en Cursor.
 2. Abre el chat del Agent (`Cmd + L`) en modo **Agent**.
-3. Escribe `/` y comprueba que aparecen `nueva-leccion`, `estudiar` y `repaso`.
+3. Escribe `/` y comprueba que aparecen `nueva-leccion`, `docente` y `repaso`.
 4. Pega esto para comprobar que Cursor leyó las reglas:
 
 ```
@@ -12,12 +12,17 @@
 
 Debe decir que es el orquestador y nombrar a `investigador`, `redactor` y `verificador`.
 
+5. Configura Grok Bot como investigador: sigue `docs/grok-bot.md` (10 minutos).
+6. Haz la prueba de calibración: `docs/prueba-calibracion.md`. Empieza leyendo la lección de referencia `N1-M1-L01`.
+
+Si Cursor marca error en el modelo del verificador (`claude-opus-5`), cambia esa línea de `.cursor/agents/verificador.md` por `model: inherit` y elige un modelo Claude en el selector del chat.
+
 ## El ciclo diario
 
 ```mermaid
 flowchart LR
   A["/repaso<br>(si hay pendientes)"] --> B["/nueva-leccion"]
-  B --> C["/estudiar"]
+  B --> C["/docente"]
   C --> D[Aprobar o pedir cambios]
 ```
 
@@ -25,7 +30,7 @@ flowchart LR
 | :-- | :-- | :-- |
 | Crear la siguiente lección | `/nueva-leccion` | 5–10 min de espera (los agentes trabajan) |
 | Crear una lección concreta | `/nueva-leccion N5-M1-L03` | igual |
-| Estudiar | `/estudiar` o `/estudiar N1-M1-L01` | 15 min |
+| Estudiar con la docente | `/docente` o `/docente N1-M1-L01` | 15 min |
 | Repasar | `/repaso` | 2 min por lección |
 
 **Truco TDAH:** lanza `/nueva-leccion` de la lección de mañana justo al terminar de estudiar la de hoy. Así siempre hay una lista esperando.

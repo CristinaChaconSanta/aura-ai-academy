@@ -9,12 +9,14 @@ Stdlib only: the frontmatter parser supports the small YAML subset we use.
 """
 from __future__ import annotations
 
+import bisect
 import re
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LESSONS_DIR = REPO_ROOT / "lecciones"
+BANNED_PHRASES_PATH = REPO_ROOT / "docs" / "frases-prohibidas.txt"
 
 ID_RE = re.compile(r"^N([1-7])-M\d+-L\d{2}$")
 VALID_STATES = ("borrador", "verificada", "aprobada")
@@ -42,6 +44,20 @@ TABLE_SEPARATOR_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\
 QUESTION_RE = re.compile(r"^\d+\.\s")
 LINK_RE = re.compile(r"\[[^\]]*\]\(\s*https?://[^)\s]+[^)]*\)")
 BARE_URL_RE = re.compile(r"(?<!\()https?://[^\s)>\]]+")
+
+MAX_PARAGRAPH_WORDS = 80
+MAX_SENTENCE_WORDS = 40
+MAX_EM_DASHES = 3
+MAX_EXCLAMATIONS = 1
+MAX_EMOJIS = 3
+SOURCES_HEADING = "## 10. Fuentes"
+LIST_ITEM_RE = re.compile(r"^\s*(?:[-*]\s|\d+\.\s)")
+HTML_TAG_RE = re.compile(r"<[^>]*>")
+INLINE_CODE_RE = re.compile(r"`[^`]*`")
+MD_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+ANY_URL_RE = re.compile(r"https?://\S+")
+SENTENCE_END_RE = re.compile(r"[.?!]+(?=\s|$)")
+EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
 
 
 class FrontmatterError(ValueError):
@@ -276,6 +292,174 @@ def _validate_body(body: str) -> list[str]:
     return errors
 
 
+def load_banned_phrases(path: Path | None = None) -> list[str]:
+    """Read the banned phrases file; return [] if it is missing or unreadable."""
+    path = BANNED_PHRASES_PATH if path is None else path
+    try:
+        raw = Path(path).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return []
+    phrases: list[str] = []
+    for line in raw.splitlines():
+        phrase = " ".join(line.split()).lower()
+        if phrase and not phrase.startswith("#") and phrase not in phrases:
+            phrases.append(phrase)
+    return phrases
+
+
+def _prose_lines(body_lines: list[str], first_line: int) -> list[tuple[int, str, str, str]]:
+    """Classify body lines as (line_number, kind, text, section).
+
+    kind is one of: "text", "list", "quote", "html", "break". "break" covers
+    blank lines, headings, tables and fenced code: none of them is prose, and
+    all of them end a paragraph. "html" lines (e.g. `<details>...</details>`)
+    keep their text without tags: it counts for phrases, dashes, exclamations
+    and emojis, but it is ignored for paragraph and sentence length.
+    """
+    result: list[tuple[int, str, str, str]] = []
+    in_fence = False
+    section = ""
+    for index, line in enumerate(body_lines):
+        number = first_line + index
+        stripped = line.strip()
+        if FENCE_RE.match(line):
+            in_fence = not in_fence
+            result.append((number, "break", "", section))
+            continue
+        if in_fence or not stripped or stripped.startswith("|"):
+            result.append((number, "break", "", section))
+            continue
+        if stripped.startswith("#"):
+            if line.startswith("## "):
+                section = line.rstrip()
+            result.append((number, "break", "", section))
+            continue
+        if stripped.startswith("<"):
+            kind, text = "html", HTML_TAG_RE.sub(" ", stripped)
+        elif stripped.startswith(">"):
+            kind, text = "quote", stripped.lstrip(">").strip()
+        elif LIST_ITEM_RE.match(line):
+            kind, text = "list", LIST_ITEM_RE.sub("", line, count=1).strip()
+        else:
+            kind, text = "text", stripped
+        result.append((number, kind, text, section))
+    return result
+
+
+def _clean_for_counting(text: str) -> str:
+    text = INLINE_CODE_RE.sub(" ", text)
+    text = MD_LINK_RE.sub(r"\1", text)
+    return ANY_URL_RE.sub(" ", text)
+
+
+def _join_with_offsets(lines: list[tuple[int, str]]) -> tuple[str, list[int], list[int]]:
+    """Join (line_number, text) with spaces; return text, start offsets, line numbers."""
+    parts: list[str] = []
+    starts: list[int] = []
+    numbers: list[int] = []
+    position = 0
+    for number, text in lines:
+        starts.append(position)
+        numbers.append(number)
+        parts.append(text)
+        position += len(text) + 1
+    return " ".join(parts), starts, numbers
+
+
+def _line_at(offset: int, starts: list[int], numbers: list[int]) -> int:
+    return numbers[bisect.bisect_right(starts, offset) - 1]
+
+
+def _check_banned_phrases(prose: list[tuple[int, str]]) -> list[str]:
+    phrases = load_banned_phrases()
+    if not phrases or not prose:
+        return []
+    normalized = [(number, " ".join(text.split()).lower()) for number, text in prose]
+    joined, starts, numbers = _join_with_offsets(normalized)
+    errors: list[str] = []
+    for phrase in phrases:
+        position = joined.find(phrase)
+        if position >= 0:
+            line = _line_at(position, starts, numbers)
+            errors.append(f'estilo: frase prohibida "{phrase}" (línea {line})')
+    return errors
+
+
+def _check_sentences(block: list[tuple[int, str]]) -> list[str]:
+    cleaned = [(number, _clean_for_counting(text)) for number, text in block]
+    joined, starts, numbers = _join_with_offsets(cleaned)
+    errors: list[str] = []
+    begin = 0
+    boundaries = [match.end() for match in SENTENCE_END_RE.finditer(joined)] + [len(joined)]
+    for end in boundaries:
+        sentence = joined[begin:end]
+        words = len(sentence.split())
+        if words > MAX_SENTENCE_WORDS:
+            offset = begin + len(sentence) - len(sentence.lstrip())
+            line = _line_at(offset, starts, numbers)
+            errors.append(f"estilo: frase de {words} palabras (máx. {MAX_SENTENCE_WORDS}) en línea {line}")
+        begin = end
+    return errors
+
+
+def _check_lengths(lines: list[tuple[int, str, str, str]]) -> list[str]:
+    """Paragraph and sentence length. Paragraphs = runs of plain "text" lines;
+    list items and blockquotes are checked one by one for sentence length only."""
+    errors: list[str] = []
+    paragraph: list[tuple[int, str]] = []
+
+    def flush() -> None:
+        if not paragraph:
+            return
+        words = sum(len(_clean_for_counting(text).split()) for _, text in paragraph)
+        if words > MAX_PARAGRAPH_WORDS:
+            errors.append(
+                f"estilo: párrafo de {words} palabras (máx. {MAX_PARAGRAPH_WORDS}) en línea {paragraph[0][0]}"
+            )
+        errors.extend(_check_sentences(paragraph))
+        paragraph.clear()
+
+    for number, kind, text, _ in lines:
+        if kind == "text":
+            paragraph.append((number, text))
+            continue
+        flush()
+        if kind in ("list", "quote"):
+            errors.extend(_check_sentences([(number, text)]))
+    flush()
+    return errors
+
+
+def _validate_style(body: str, first_line: int) -> list[str]:
+    lines = _prose_lines(body.splitlines(), first_line)
+    prose = [(number, text) for number, kind, text, _ in lines if kind != "break"]
+    errors = _check_banned_phrases(prose)
+    errors.extend(_check_lengths(lines))
+
+    dashes = sum(
+        text.count("—") for _, kind, text, section in lines
+        if kind != "break" and section != SOURCES_HEADING
+    )
+    if dashes > MAX_EM_DASHES:
+        errors.append(f"estilo: {dashes} rayas (—); máx. {MAX_EM_DASHES}. Usa punto o coma.")
+    exclamations = sum(text.count("¡") for _, text in prose)
+    if exclamations > MAX_EXCLAMATIONS:
+        errors.append(f"estilo: {exclamations} exclamaciones; máx. {MAX_EXCLAMATIONS}")
+    emojis = sum(len(EMOJI_RE.findall(text)) for _, text in prose)
+    if emojis > MAX_EMOJIS:
+        errors.append(f"estilo: {emojis} emojis; máx. {MAX_EMOJIS}")
+    return errors
+
+
+def _body_first_line(text: str) -> int:
+    """1-based file line number of the first body line (after the closing '---')."""
+    lines = text.splitlines()
+    for index in range(1, len(lines)):
+        if lines[index].strip() == "---":
+            return index + 2
+    return 1
+
+
 def validate_file(path: Path | str) -> list[str]:
     """Return the list of error messages for one lesson file (empty if valid)."""
     path = Path(path)
@@ -288,7 +472,11 @@ def validate_file(path: Path | str) -> list[str]:
         meta = parse_frontmatter(block)
     except FrontmatterError as exc:
         return [str(exc)]
-    return _validate_frontmatter(meta, path) + _validate_body(body)
+    return (
+        _validate_frontmatter(meta, path)
+        + _validate_body(body)
+        + _validate_style(body, _body_first_line(text))
+    )
 
 
 def collect_files(args: list[str]) -> list[Path]:

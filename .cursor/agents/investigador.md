@@ -36,6 +36,9 @@ Solo si encontraste evidencia o es un patrón conocido y documentado.
 ## Ideas de analogía
 2-3 opciones, idealmente del periodismo o la comunicación.
 
+## Conversación actual (opcional)
+De qué se habla hoy sobre el tema (X, foros). Nunca es fuente de un hecho: solo contexto.
+
 ## Fuera de alcance
 Conceptos relacionados que NO van en esta lección (y su ID en la malla, si existe).
 

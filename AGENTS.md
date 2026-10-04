@@ -27,11 +27,16 @@ leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
 | `docs/perfil-aprendiz.md` | Quién aprende y cómo | Al redactar o tutorar |
 | `docs/como-usar.md` | Guía de uso en Cursor y prompts útiles | La aprendiz, al empezar |
 | `lecciones/N<k>/` | Lecciones (una por archivo) | Al estudiar o verificar |
-| `aprendizaje/` | Progreso, repasos espaciados, glosario, preguntas abiertas | En `/estudiar` y `/repaso` |
+| `aprendizaje/` | Progreso, repasos espaciados, glosario, preguntas abiertas | En `/docente` y `/repaso` |
 | `.cursor/agents/` | Subagentes: `investigador`, `redactor`, `verificador` | Al ajustar el pipeline |
 | `.cursor/rules/orquestador.mdc` | Rol del agente principal | Siempre (se aplica solo) |
-| `.cursor/skills/` | Flujos `/nueva-leccion`, `/estudiar`, `/repaso` | Al invocarlos |
-| `scripts/validate_lessons.py` | Valida el formato de las lecciones | Después de escribir una lección |
+| `.cursor/skills/` | Flujos `/nueva-leccion`, `/docente`, `/repaso` | Al invocarlos |
+| `scripts/validate_lessons.py` | Valida formato y estilo de las lecciones | Después de escribir una lección |
+| `docs/frases-prohibidas.txt` | Frases típicas de IA que el validador rechaza | Al redactar; agrega frases nuevas aquí |
+| `docs/grok-bot.md` | Grok Bot como investigador vía la rama `investigacion` | Al configurar o depurar la investigación |
+| `docs/prueba-calibracion.md` | Rúbrica para saber si Cursor escribe bien | Antes de producir muchas lecciones |
+| `docs/hoja-de-ruta.md` | Fases 0 a 4 y cuándo nacen los agentes de backend y frontend | Al cambiar de fase |
+| `lecciones/N1/N1-M1-L01-*.md` | Lección de referencia (tono y nivel) | El redactor, siempre |
 
 ## 3. Reglas duras
 
