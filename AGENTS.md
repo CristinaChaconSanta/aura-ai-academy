@@ -21,12 +21,25 @@ leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
 | `.cursor/` | Regla del arnés y hook de cierre para Cursor | Al ajustar el arnés en Cursor |
 | `CHECKPOINTS.md` | Lista verificable de cierre | Antes de cerrar la sesión |
 | `docs/referencia/` | Documento original de Perplexity y su revisión | Solo como fuente de temas; contiene errores señalados en la revisión |
+| `curriculum/malla.md` | Malla canónica: niveles, módulos, IDs y estado de cada lección | Antes de crear o estudiar una lección |
+| `docs/plantilla-leccion.md` | Formato obligatorio de una lección | Al redactar o verificar |
+| `docs/reglas-contenido.md` | Fuentes, errores conocidos, diseño TDAH, verificación | Al investigar, redactar o verificar |
+| `docs/perfil-aprendiz.md` | Quién aprende y cómo | Al redactar o tutorar |
+| `docs/como-usar.md` | Guía de uso en Cursor y prompts útiles | La aprendiz, al empezar |
+| `lecciones/N<k>/` | Lecciones (una por archivo) | Al estudiar o verificar |
+| `aprendizaje/` | Progreso, repasos espaciados, glosario, preguntas abiertas | En `/estudiar` y `/repaso` |
+| `.cursor/agents/` | Subagentes: `investigador`, `redactor`, `verificador` | Al ajustar el pipeline |
+| `.cursor/rules/orquestador.mdc` | Rol del agente principal | Siempre (se aplica solo) |
+| `.cursor/skills/` | Flujos `/nueva-leccion`, `/estudiar`, `/repaso` | Al invocarlos |
+| `scripts/validate_lessons.py` | Valida el formato de las lecciones | Después de escribir una lección |
 
 ## 3. Reglas duras
 
 - Ninguna tarea está terminada sin `./init.sh` en verde.
 - Cero secretos en commits: `.env` está en `.gitignore`.
 - Nunca inventar datos.
+- Toda lección pasa `scripts/validate_lessons.py` y la revisión del `verificador` antes de quedar `verificada`.
+- Solo la aprendiz marca una lección como `aprobada`.
 
 ## 4. Subagentes
 

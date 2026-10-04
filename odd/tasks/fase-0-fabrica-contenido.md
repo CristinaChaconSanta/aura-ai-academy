@@ -33,19 +33,27 @@ Fuera de alcance: app web, base de datos, despliegue (fases 1–4).
 ## Tareas
 
 - [x] T1 — Arnés del proyecto (`init.sh`, hooks, `CLAUDE.md`, `AGENTS.md`, `CHECKPOINTS.md`). Ruta: inline (plantilla mecánica).
-- [ ] T2 — Malla canónica `curriculum/malla.md` con IDs de lección. Ruta: inline (necesita el contexto de la revisión hecha en esta sesión).
-- [ ] T3 — Especificaciones de contenido: `docs/plantilla-leccion.md`, `docs/reglas-contenido.md`, `docs/perfil-aprendiz.md`. Ruta: inline (mismo contexto).
-- [ ] T4 — Subagentes, regla orquestadora y skills de Cursor. Ruta: inline (es el entregable pedido: "crea los prompts para Cursor").
-- [ ] T5 — Validador `scripts/validate_lessons.py` + tests. Ruta: delegada (writer trigger: 2 archivos no triviales de código, especificación cerrada).
-- [ ] T6 — Archivos de aprendizaje (`aprendizaje/`), glosario y guía de uso `docs/como-usar.md`; actualizar `AGENTS.md`. Ruta: inline.
+- [x] T2 — Malla canónica `curriculum/malla.md` con IDs de lección. Ruta: inline (necesita el contexto de la revisión hecha en esta sesión).
+- [x] T3 — Especificaciones de contenido: `docs/plantilla-leccion.md`, `docs/reglas-contenido.md`, `docs/perfil-aprendiz.md`. Ruta: inline (mismo contexto).
+- [x] T4 — Subagentes, regla orquestadora y skills de Cursor. Ruta: inline (es el entregable pedido: "crea los prompts para Cursor").
+- [x] T5 — Validador `scripts/validate_lessons.py` + tests. Ruta: delegada (writer trigger: 2 archivos no triviales de código, especificación cerrada).
+- [x] T6 — Archivos de aprendizaje (`aprendizaje/`), glosario y guía de uso `docs/como-usar.md`; actualizar `AGENTS.md`. Ruta: inline.
 
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
 - Una lección de ejemplo pasa el validador.
-- La usuaria puede escribir `/nueva-leccion N1-M1-L01` en Cursor y el orquestador sigue el pipeline investigador → redactor → diagramador → verificador.
+- La usuaria puede escribir `/nueva-leccion N1-M1-L01` en Cursor y el orquestador sigue el pipeline investigador → redactor → verificador.
+
+## Cambios aceptados
+- Se eliminó el subagente `diagramador`: el redactor hace el diagrama y el verificador lo revisa. Motivo: ahorro de tokens pedido por la usuaria.
+- La lección de ejemplo no se escribe aquí: la primera lección real la produce el pipeline en Cursor (es la prueba de la fase 0). El esqueleto de `docs/plantilla-leccion.md` sí se validó contra el validador.
 
 ## Progreso y evidencia
-- T1: ver commit del arnés en la rama `chore/arnes-inicial`.
+- T1: commit `84f99df` en `chore/arnes-inicial`; `./init.sh` EXIT=0; 13 tests del arnés en verde.
+- T5: delegada; 35 tests nuevos (34 pasan, 1 omitido sin lecciones). Suite completa: 47 passed, 1 skipped.
+- Esqueleto de la plantilla validado: `validate_lessons.py` → OK, EXIT=0.
+- T2–T6: commit de la rama `feat/fase-0-fabrica-contenido` (ver `git log`).
+- Pendiente: prueba real en Cursor (`/nueva-leccion N1-M1-L01`), solo la puede hacer la usuaria.
 
 ## Siguiente paso
-T2.
+La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.
