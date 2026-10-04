@@ -57,3 +57,9 @@ Fuera de alcance: app web, base de datos, despliegue (fases 1–4).
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.
+
+## Estado del espejo en Engram
+Pendiente: la sesión de Engram quedó registrada en otro proyecto (`session_project_mismatch`). Resincronizar en la próxima sesión abierta desde esta carpeta.
+
+## Revisión (RDD)
+`gentle-ai review assess` sobre `84f99df..904b612`: riesgo **high** (`process_boundary` en `scripts/validate_lessons.py`), `review_due: true`. Siguiente transición: `review.start`, esperando consentimiento de la usuaria.
