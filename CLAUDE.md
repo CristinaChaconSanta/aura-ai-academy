@@ -16,7 +16,7 @@ Fase actual: **fase 0** (sin app). El trabajo ocurre en Cursor con un orquestado
 
 ## Principios
 - **Nunca inventar.** Toda afirmación factual en una lección lleva fuente. Si no hay fuente, se dice "no verificado".
-- **Una lección = un concepto = 10–15 minutos.**
+- **Una lección = un concepto = 15–32 minutos, máximo 5 palabras nuevas.**
 - **Contraste antes que definición.** Primero la comparación, luego el término técnico.
 - **Contenido en español neutro.** Términos técnicos en inglés se explican la primera vez.
 - **La aprendiz aprueba.** Ninguna lección pasa a `aprobada` sin su visto bueno.

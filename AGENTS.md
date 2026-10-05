@@ -22,8 +22,9 @@ leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
 | `CHECKPOINTS.md` | Lista verificable de cierre | Antes de cerrar la sesión |
 | `docs/referencia/` | Documento original de Perplexity y su revisión | Solo como fuente de temas; contiene errores señalados en la revisión |
 | `curriculum/malla.md` | Malla canónica: niveles, módulos, IDs y estado de cada lección | Antes de crear o estudiar una lección |
+| `curriculum/mapa.md` | Mapa mental global (Mermaid): crece con cada lección aprobada y sus conexiones | Al aprobar una lección o para ver el recorrido completo |
 | `docs/plantilla-leccion.md` | Formato obligatorio de una lección | Al redactar o verificar |
-| `docs/reglas-contenido.md` | Fuentes, errores conocidos, diseño TDAH, verificación | Al investigar, redactar o verificar |
+| `docs/reglas-contenido.md` | Fuentes, errores conocidos, diseño TDAH, verificación, evidencia de la plantilla | Al investigar, redactar o verificar |
 | `docs/perfil-aprendiz.md` | Quién aprende y cómo | Al redactar o tutorar |
 | `docs/como-usar.md` | Guía de uso en Cursor y prompts útiles | La aprendiz, al empezar |
 | `lecciones/N<k>/` | Lecciones (una por archivo) | Al estudiar o verificar |
@@ -38,7 +39,7 @@ leerla. Las reglas del proyecto viven en `CLAUDE.md` y `docs/`.
 | `docs/grok-bot.md` | Grok Bot como investigador vía la rama `investigacion` | Al configurar o depurar la investigación |
 | `docs/prueba-calibracion.md` | Rúbrica para saber si Cursor escribe bien | Antes de producir muchas lecciones |
 | `docs/hoja-de-ruta.md` | Fases 0 a 4 y cuándo nacen los agentes de backend y frontend | Al cambiar de fase |
-| `lecciones/N1/N1-M1-L01-*.md` | Lección de referencia (tono y nivel) | El redactor, siempre |
+| `lecciones/N1/N1-M1-L01-las-partes-de-una-url.md` | Lección de referencia (tono, nivel y formato); N1-M1-L02 y N1-M1-L03 siguen el mismo formato | El redactor, siempre |
 
 ## 3. Reglas duras
 

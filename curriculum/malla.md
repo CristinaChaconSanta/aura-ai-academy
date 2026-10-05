@@ -4,7 +4,7 @@
 
 **Formato de ID:** `N<nivel>-M<módulo>-L<lección>` (ej. `N1-M2-L03`).
 **Estados:** ⬜ pendiente · 📝 borrador · 🔎 verificada · ✅ aprobada (solo la aprendiz marca ✅).
-**Regla:** una lección = un concepto = 15–25 minutos.
+**Regla:** una lección = un concepto = 15–32 minutos.
 **Talleres:** cada módulo cierra con un taller `N<k>-M<m>-T` (ver `talleres/README.md`). 🛠️ = práctica con tus manos.
 
 ## Mapa de niveles
@@ -28,13 +28,15 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 ### N1-M1 · Internet
 | ID | Lección | Estado |
 | :-- | :-- | :-- |
-| N1-M1-L01 | Qué pasa cuando escribes una URL | 🔎 |
-| N1-M1-L02 | Cliente y servidor | ⬜ |
-| N1-M1-L03 | HTTP: peticiones, respuestas y códigos (200, 404, 500) | ⬜ |
-| N1-M1-L04 | DNS y dominios | ⬜ |
-| N1-M1-L05 | HTTPS y certificados | ⬜ |
-| N1-M1-L06 | APIs y endpoints | ⬜ |
-| N1-M1-L07 | JSON: el idioma de las APIs | ⬜ |
+| N1-M1-L01 | Las partes de una URL | 📝 |
+| N1-M1-L02 | Parámetros y anclas: el final de una URL | 📝 |
+| N1-M1-L03 | El viaje de una URL | 📝 |
+| N1-M1-L04 | Cliente y servidor | ⬜ |
+| N1-M1-L05 | HTTP: peticiones, respuestas y códigos (200, 404, 500) | ⬜ |
+| N1-M1-L06 | DNS y dominios | ⬜ |
+| N1-M1-L07 | HTTPS y certificados | ⬜ |
+| N1-M1-L08 | APIs y endpoints | ⬜ |
+| N1-M1-L09 | JSON: el idioma de las APIs | ⬜ |
 | N1-M1-T | 🛠️ Taller del módulo | 🔎 |
 
 ### N1-M2 · El computador por dentro

@@ -12,7 +12,7 @@
 - **Malla única** `curriculum/malla.md`: 7 niveles (N1 máquina → N7 Chief AI Officer), ~200 lecciones y 33 talleres.
 - **Formato de lección** `docs/plantilla-leccion.md`: 11 secciones, incluida "Las palabras nuevas" (qué es, por qué se llama así, ejemplo). Regla: cero conocimiento previo. 15–25 min, máx. 2.200 palabras.
 - **Validador** `scripts/validate_lessons.py`: formato + estilo (frases típicas de IA en `docs/frases-prohibidas.txt`, párrafos, frases largas, rayas, exclamaciones, emojis) + cada término del glosario explicado.
-- **Lección de referencia** `lecciones/N1/N1-M1-L01-que-pasa-cuando-escribes-una-url.md` (verificada con MDN y RFC 3986). La aprendiz la leyó: le gustó, pidió más explicación de los nombres, ya aplicado.
+- **Lección de referencia** `lecciones/N1/N1-M1-L01-las-partes-de-una-url.md`. La antigua "Qué pasa cuando escribes una URL" (verificada con MDN y RFC 3986; a la aprendiz le gustó) se partió en N1-M1-L01, L02 y L03 por la regla de máximo 5 términos; están en `borrador` hasta la verificación T23.
 - **Cursor**: orquestador (`.cursor/rules/orquestador.mdc`), subagentes `investigador`, `redactor`, `verificador` (modelo `claude-opus-5`), `tallerista`; skills `/nueva-leccion`, `/docente`, `/repaso`, `/nuevo-taller`, `/taller`.
 - **Grok Bot** (`docs/grok-bot.md`): bot "Investigador Aura" sube investigaciones a la rama `investigacion`; bot "Docente Aura" responde dudas en vivo (texto o voz) y anota huecos de las lecciones. Grok Bot tiene uso propio, aparte del cupo de Cursor.
 - **Talleres** (`talleres/`): primero listo, `N1-M1-T` "Desarma una URL" (10 pruebas, se ve en el navegador con `index.html`).

@@ -1,6 +1,6 @@
 # Taller N1-M1: Desarma una URL
 
-**Practicas:** la lección [Qué pasa cuando escribes una URL](../../lecciones/N1/N1-M1-L01-que-pasa-cuando-escribes-una-url.md).
+**Practicas:** las lecciones [Las partes de una URL](../../lecciones/N1/N1-M1-L01-las-partes-de-una-url.md) (esquema, dominio y ruta) y [Parámetros y anclas](../../lecciones/N1/N1-M1-L02-parametros-y-anclas-el-final-de-una-url.md) (parámetros y ancla).
 **Tiempo:** unos 25 minutos.
 **Editas:** solo `solucion.js`.
 

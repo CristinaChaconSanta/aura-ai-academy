@@ -85,7 +85,7 @@ Cómo responder:
 Guarda estas instrucciones como skill para todas nuestras conversaciones.
 ```
 
-**Ejemplo de uso:** "Estoy en la lección N1-M1-L01. ¿Por qué el ancla se llama ancla?"
+**Ejemplo de uso:** "Estoy en la lección N1-M1-L02. ¿Por qué el ancla se llama ancla?"
 
 Los huecos que anota llegan a Cursor por la rama `investigacion`. Pídele a Cursor una vez por semana:
 
