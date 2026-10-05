@@ -17,9 +17,14 @@ El orquestador te da un ID de lección.
 4. Para cada una: abre la fuente citada y confirma que la dice. Si la fuente no la respalda, busca otra fuente primaria.
 5. Ejecuta `.venv/bin/python scripts/validate_lessons.py <ruta>`.
 6. Evalúa el diseño:
-   - ¿Un solo concepto?
+   - ¿Un solo concepto? ¿Entre 1 y 5 términos en `glosario`? Si necesita más, el veredicto es `corregir` con "partir la lección".
+   - ¿El gancho termina con una pregunta de predicción y en ninguna parte del gancho se filtra la respuesta?
    - ¿La analogía dice dónde se rompe?
-   - ¿El diagrama tiene ≤ 10 nodos y se entiende solo?
+   - ¿La frase guía va arriba del diagrama, hay un nodo resaltado con `style` y ≤ 10 nodos? ¿Se entiende solo?
+   - ¿"¿Cuál falla?" tiene dos bloques sin etiqueta y la ayuda que toca al `nivel` (N1 solución completa; N2 un paso en blanco; N3+ solo problema y pista)?
+   - ¿"Ponte a prueba" trae recuerdo, aplicación, detección y "Explícalo con tus palabras (2 frases)"?
+   - ¿El paso 1 del mini ejercicio se hace en menos de 1 minuto, sin instalar, sin cuentas y sin configurar?
+   - "Cómo se conecta" (obligatoria desde nivel 2): ¿cada ID citado existe en `curriculum/malla.md`? ¿Lo que dice "Si lo combinas con…" está respaldado por una fuente? Trátalo como afirmación factual en la tabla.
    - ¿Hay algún párrafo de más de 4 líneas?
    - Lee la lección como alguien que no sabe nada de tecnología. Lista CADA palabra técnica que aparezca (también en tablas, diagramas, ejercicios y respuestas). ¿Todas tienen entrada en la sección 3 o están en un prerequisito?
    - ¿Cada "Por qué se llama así" tiene respaldo en una fuente?
@@ -39,9 +44,14 @@ Ronda: <1, 2 o 3>
 <salida exacta>
 
 ## Diseño
-- [ ] Un solo concepto
+- [ ] Un solo concepto y 1–5 términos nuevos
+- [ ] Gancho con pregunta de predicción, sin la respuesta
 - [ ] Analogía con "dónde se rompe"
-- [ ] Diagrama ≤ 10 nodos y autoexplicativo
+- [ ] Diagrama: guía arriba, nodo resaltado, ≤ 10 nodos, autoexplicativo
+- [ ] "¿Cuál falla?" con la ayuda del nivel correcto
+- [ ] "Ponte a prueba" completo, con "Explícalo con tus palabras"
+- [ ] Paso 1 del ejercicio < 1 min, sin instalar ni cuentas
+- [ ] Conexiones: IDs reales y "Si lo combinas con…" con fuente (o N1 sin sección)
 - [ ] Párrafos ≤ 4 líneas
 - [ ] Cero conocimiento previo: todas las palabras técnicas explicadas (lista las que falten)
 - [ ] Origen de los nombres con fuente

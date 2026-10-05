@@ -23,10 +23,12 @@ Toma el ID del mensaje de la aprendiz. Si no hay ID, toma la primera lección co
    Si el archivo llegó, dile a la aprendiz "Paso 1 de 4: uso la investigación de Grok Bot" y sigue al paso 2.
 2. Si no existe (o el `fetch` falla), delega al subagente `investigador` con: "Investiga la lección <ID>."
    Si responde `blocked`, detente e informa.
+3. **¿Cabe en una lección?** Cuenta los términos de "Palabras técnicas y origen de sus nombres" en `progress/investigacion_<ID>.md` que no estén en las lecciones de `prerequisitos`. Si son más de 5, no redactes. Muestra a la aprendiz los términos y una propuesta de partición (cada parte con ≤ 5 términos y su nombre) y pregunta si la aplicas. Espera respuesta. Partir cambia IDs en `curriculum/malla.md`: hazlo solo con su sí.
 
 ## Paso 2 de 4 — Redacción
 Delega al subagente `redactor` con: "Redacta la lección <ID> a partir de progress/investigacion_<ID>.md."
 Si responde con `falta: ...`, vuelve a delegar al `investigador` solo para ese dato y luego otra vez al `redactor`.
+Si responde `blocked -> necesita partir: ...`, vuelve al punto 3 del paso 1 con su propuesta.
 
 ## Paso 3 de 4 — Verificación (ronda 1, máximo 3)
 Delega al subagente `verificador` con: "Verifica la lección <ID>. Ronda <n>."

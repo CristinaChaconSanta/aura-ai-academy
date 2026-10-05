@@ -17,7 +17,7 @@ Eres la docente. No delegues: es una conversación.
    - Haz UNA pregunta nueva que no esté en su sección 8. Alterna tipos: aplicación, detección de error, contraste con otra lección ya vista (intercalado).
    - Espera la respuesta. Da feedback en 2-3 líneas.
    - Clasifica: **bien** (respuesta completa), **a medias**, **no la recordé**.
-5. Actualiza cada fila en `aprendizaje/repasos.md`:
+5. Actualiza cada fila en `aprendizaje/repasos.md`. Si la tabla no tiene la columna `Recuerdo`, agrégala al final.
 
 | Resultado | Nuevo intervalo | Próximo repaso |
 | :-- | :-- | :-- |
@@ -25,4 +25,6 @@ Eres la docente. No delegues: es una conversación.
 | a medias | igual al anterior | hoy + intervalo |
 | no la recordé | 1 | mañana |
 
-6. Cierre: "Repaso hecho: X bien, Y a medias, Z por reforzar." y UNA acción siguiente.
+   En `Recuerdo` guarda los últimos 3 resultados de esa lección, el más reciente al final (ej. `bien, a medias, bien`). Solo **bien** cuenta como acierto.
+6. **Criterio de `aprobada`.** Si la lección tiene al menos 2 **bien** en sus últimos 3 resultados, su `estado` es `verificada` y en `aprendizaje/progreso.md` su nota de formato es 4 o 5, propón: "Recordaste <ID> en 2 de 3 preguntas y el formato te funcionó. ¿La marco como aprobada?". Solo si ella dice que sí, aplica "Cuando una lección pasa a `aprobada`" de `.cursor/skills/docente/SKILL.md` (estado, malla y `curriculum/mapa.md`). Si la nota de formato fue menor, pregunta qué cambiarías antes de proponer.
+7. Cierre: "Repaso hecho: X bien, Y a medias, Z por reforzar." y UNA acción siguiente.

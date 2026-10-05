@@ -35,10 +35,12 @@ factuales y se cortó a la mitad. Ver `docs/referencia/revision-malla.md`, secci
 - **Explica el origen de los nombres.** La aprendiz es periodista: entender de dónde viene una palabra la fija en la memoria. El origen también lleva fuente.
 
 - Un concepto por lección, pero explicado completo: más vale una lección de 20 minutos clara que una de 10 que asume cosas. Si aparece un segundo concepto, se menciona en una línea y se enlaza a su lección.
+- **Máximo 5 palabras nuevas por lección.** Si el concepto necesita más, la lección se parte antes de redactar.
+- **Duración visible.** Cada sección lleva su marca ⏱; la lección dura entre 15 y 32 minutos.
 - Frases cortas. Párrafos de máximo 4 líneas.
 - Negrita solo para la idea clave de cada sección.
 - Nada de "como vimos antes" sin enlace: la aprendiz no tiene que recordar.
-- Cada lección termina con una acción concreta (sección 9).
+- Cada lección trae una acción concreta (sección 9) cuyo primer paso toma menos de 1 minuto, sin instalar nada ni crear cuentas.
 - Sin relleno motivacional ("¡Excelente!", "Es muy fácil").
 
 ## 4. Lenguaje
@@ -54,6 +56,8 @@ factuales y se cortó a la mitad. Ver `docs/referencia/revision-malla.md`, secci
 - Máximo 10 nodos.
 - Nada de imágenes generadas por IA para explicar conceptos: escriben mal el texto y dibujan flechas sin sentido.
 - El diagrama debe poder entenderse sin leer la lección.
+- La frase guía (qué mirar primero) va **arriba** del diagrama y el nodo clave se resalta con `style`.
+- Desde nivel 2, la sección "Cómo se conecta" trae un mini mapa con IDs reales de la malla. Cada lección aprobada suma su nodo a `curriculum/mapa.md`, el mapa mental de todo el recorrido.
 
 ## 6. Verificación (lo que hace el verificador)
 
@@ -61,7 +65,20 @@ Para cada lección, el verificador entrega un reporte con:
 
 1. **Afirmaciones revisadas:** tabla `afirmación | fuente | veredicto (✅ correcta / ⚠️ imprecisa / ❌ falsa / ❓ sin fuente)`.
 2. **Formato:** salida de `.venv/bin/python scripts/validate_lessons.py <ruta>`.
-3. **Diseño:** ¿un solo concepto?, ¿toda palabra técnica tiene entrada en la sección 3?, ¿la analogía dice dónde se rompe?, ¿el diagrama tiene ≤ 10 nodos?
+3. **Diseño:** ¿un solo concepto con 1–5 términos?, ¿toda palabra técnica tiene entrada en la sección 3?, ¿el gancho pregunta sin delatar la respuesta?, ¿la analogía dice dónde se rompe?, ¿el diagrama tiene guía arriba, nodo resaltado y ≤ 10 nodos?, ¿"¿Cuál falla?" da la ayuda que toca al nivel?, ¿las conexiones citan IDs reales y con fuente?
 4. **Veredicto final:** `aprobar` (pasa a `verificada`) o `corregir` (con lista de cambios).
 
 Máximo 2 rondas de corrección. Si a la tercera sigue fallando: se detiene y se pregunta a la aprendiz.
+
+## 7. Por qué la plantilla es así (evidencia)
+
+| Elemento de la plantilla | Base | Fuente |
+| :-- | :-- | :-- |
+| "Ponte a prueba", `/repaso` y las 2 preguntas al empezar `/docente` | Práctica de recuperación y práctica espaciada: utilidad **alta** en la revisión de Dunlosky et al. (2013). La autoexplicación ("explícalo con tus palabras") sale con utilidad **moderada**. | https://www.aft.org/ae/fall2013/dunlosky |
+| Pregunta de predicción en el gancho | Efecto de pretesting: intentar responder antes de la lección mejora lo que se aprende después, aunque se falle. | https://www.structural-learning.com/post/pretesting-effect-testing-before-teaching |
+| "¿Cuál falla?" (leer y predecir antes de escribir) | PRIMM: predecir, ejecutar, investigar, modificar y crear, en ese orden. | https://computingeducationresearch.org/projects/primm/ |
+| Guía arriba del diagrama, nodo resaltado, sin relleno | Principios de Mayer: señalización y coherencia. | https://www.growthengineering.co.uk/multimedia-learning-theory/ |
+| Ayuda que baja por nivel | Efecto de inversión de la pericia: los ejemplos resueltos ayudan a quien empieza y estorban a quien ya sabe. | https://en.wikipedia.org/wiki/Expertise_reversal_effect |
+| Respuestas plegadas en `<details>` | Ver nota abajo. | https://www.nature.com/articles/s41598-018-33551-3 |
+
+**Nota honesta sobre TDAH.** La evidencia específica para TDAH es más débil que la evidencia general sobre aprendizaje. Gabay et al. (2018, *Scientific Reports*) encontraron que adultos con TDAH aprendían peor con retroalimentación inmediata en una tarea probabilística, y normal con retroalimentación demorada. Aplicar eso a respuestas que se abren con un clic es una **extrapolación**, no un hallazgo directo. Por eso `aprobada` no depende de que la lección "se sienta bien": exige que la aprendiz acierte al menos 2 de 3 preguntas sobre ella en `/repaso`, días después.

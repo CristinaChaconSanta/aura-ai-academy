@@ -27,11 +27,13 @@ flowchart LR
   D -->|fin del módulo| E["/taller"]
 ```
 
+Una lección queda **aprobada** solo después de un `/repaso`: si aciertas 2 de 3 preguntas sobre ella y el formato te funcionó, la docente te propone aprobarla y la suma a `curriculum/mapa.md`. Si te distraes a mitad de lección, la docente te dice en qué bloque vas y cuánto falta.
+
 | Quiero… | Escribo | Tiempo aprox. |
 | :-- | :-- | :-- |
 | Crear la siguiente lección | `/nueva-leccion` | 5–10 min de espera (los agentes trabajan) |
 | Crear una lección concreta | `/nueva-leccion N5-M1-L03` | igual |
-| Estudiar con la docente | `/docente` o `/docente N1-M1-L01` | 15 min |
+| Estudiar con la docente | `/docente` o `/docente N1-M1-L01` | 15–32 min (empieza con 2 preguntas de repaso si hay pendientes) |
 | Repasar | `/repaso` | 2 min por lección |
 | Practicar con código | `/taller N1-M1-T` | 20–30 min |
 | Crear el taller de un módulo | `/nuevo-taller N1-M3-T` | 5–10 min de espera |
@@ -43,6 +45,11 @@ flowchart LR
 **Saber dónde estoy**
 ```
 Lee curriculum/malla.md y aprendizaje/progreso.md. Dime en 3 líneas: nivel actual, última lección estudiada y la siguiente acción.
+```
+
+**Ver el mapa completo**
+```
+Muéstrame curriculum/mapa.md y dime en 2 frases qué temas ya puedo combinar.
 ```
 
 **No entendí algo**
@@ -76,6 +83,7 @@ La lección <ID> tiene este problema: <qué>. Vuelve a pasarla por el verificado
 | :-- | :-- |
 | Lecciones | `lecciones/N<k>/` |
 | Malla y estados | `curriculum/malla.md` |
+| Mapa mental de todo lo aprobado | `curriculum/mapa.md` |
 | Tu progreso | `aprendizaje/progreso.md` |
 | Repasos | `aprendizaje/repasos.md` |
 | Glosario | `aprendizaje/glosario.md` |
