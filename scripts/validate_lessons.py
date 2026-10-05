@@ -30,21 +30,40 @@ EXPECTED_HEADINGS = (
     "## 2. La idea en una frase",
     "## 3. Las palabras nuevas",
     "## 4. La analogía",
-    "## 5. Contraste",
-    "## 6. Diagrama",
-    "## 7. Bueno vs. malo",
+    "## 5. Diagrama",
+    "## 6. Contraste",
+    "## 7. ¿Cuál falla?",
     "## 8. Ponte a prueba",
     "## 9. Mini ejercicio",
     "## 10. Cómo te ayuda a revisar a la IA",
-    "## 11. Fuentes",
+    "## 11. Cómo se conecta",
+    "## 12. Ya puedes",
+    "## 13. Fuentes",
 )
-(GLOSSARY_SECTION, CONTRAST_SECTION, DIAGRAM_SECTION, QUIZ_SECTION, SOURCES_SECTION) = (
-    EXPECTED_HEADINGS[2], EXPECTED_HEADINGS[4], EXPECTED_HEADINGS[5],
-    EXPECTED_HEADINGS[7], EXPECTED_HEADINGS[10],
+(
+    HOOK_SECTION, GLOSSARY_SECTION, DIAGRAM_SECTION, CONTRAST_SECTION, WHICH_FAILS_SECTION,
+    QUIZ_SECTION, REVIEW_AI_SECTION, CONNECTIONS_SECTION, SOURCES_SECTION,
+) = (
+    EXPECTED_HEADINGS[0], EXPECTED_HEADINGS[2], EXPECTED_HEADINGS[4], EXPECTED_HEADINGS[5],
+    EXPECTED_HEADINGS[6], EXPECTED_HEADINGS[7], EXPECTED_HEADINGS[9], EXPECTED_HEADINGS[10],
+    EXPECTED_HEADINGS[12],
 )
-GLOSSARY_LABELS = ("**Qué es:**", "**Por qué se llama así:**", "**Ejemplo:**")
+# Section 11 is mandatory from this level on; optional below it.
+CONNECTIONS_MIN_LEVEL = 2
+GLOSSARY_LABELS = ("**Qué es:**", "**Ejemplo:**")
+ETYMOLOGY_LABEL = "Por qué se llama así"
+CONNECTIONS_LABELS = ("Viene de:", "Lleva a:", "Si lo combinas con")
+AI_OUTPUT_QUOTE = "> Salida de IA:"
+EXPLAIN_PROMPT = "Explícalo con tus palabras"
 MAX_WORDS = 2200
-MIN_DURATION, MAX_DURATION = 5, 25
+MIN_DURATION, MAX_DURATION = 15, 32
+MIN_GLOSSARY_TERMS, MAX_GLOSSARY_TERMS = 1, 5
+MALLA_PATH = REPO_ROOT / "curriculum" / "malla.md"
+
+TIMER = "\u23F1"  # ⏱, the time marker every heading carries (except Fuentes).
+TIMER_RE = re.compile("\u23F1\uFE0F?")
+DETAILS_RE = re.compile(r"<details>.*?</details>", re.DOTALL)
+LESSON_REF_RE = re.compile(r"\bN\d+-M\d+-L\d{2}\b")
 
 FENCE_RE = re.compile(r"^\s*(```|~~~)")
 TABLE_SEPARATOR_RE = re.compile(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$")
@@ -64,7 +83,7 @@ INLINE_CODE_RE = re.compile(r"`[^`]*`")
 MD_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
 ANY_URL_RE = re.compile(r"https?://\S+")
 SENTENCE_END_RE = re.compile(r"[.?!]+(?=\s|$)")
-EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF\u231A\u231B\u23E9-\u23FA]")
 
 
 class FrontmatterError(ValueError):
@@ -194,8 +213,17 @@ def _validate_frontmatter(meta: dict[str, object], path: Path) -> list[str]:
                 if not item.startswith(("http://", "https://")):
                     errors.append(f"fuente no válida: {item!r}; debe empezar por http:// o https://")
 
-    if "glosario" in meta and not isinstance(meta["glosario"], list):
-        errors.append("'glosario' debe ser una lista (puede ser [])")
+    if "glosario" in meta:
+        glossary = meta["glosario"]
+        if not isinstance(glossary, list):
+            errors.append("'glosario' debe ser una lista")
+        else:
+            count = len([item for item in glossary if item.strip()])
+            if not MIN_GLOSSARY_TERMS <= count <= MAX_GLOSSARY_TERMS:
+                errors.append(
+                    f"'glosario' debe tener entre {MIN_GLOSSARY_TERMS} y {MAX_GLOSSARY_TERMS} "
+                    f"términos (tiene {count}); si necesitas más, divide la lección"
+                )
 
     return errors
 
@@ -211,6 +239,21 @@ def _heading_lines(body_lines: list[str]) -> list[tuple[int, str]]:
         if not in_fence and line.startswith("## "):
             headings.append((index, line.rstrip()))
     return headings
+
+
+def section_key(heading: str) -> str:
+    """Drop the time marker: '## 1. El gancho ⏱ 1 min' -> '## 1. El gancho'."""
+    return TIMER_RE.split(heading, maxsplit=1)[0].rstrip(" (")
+
+
+def load_lesson_ids(path: Path | None = None) -> set[str] | None:
+    """Lesson IDs listed in the malla, or None if it cannot be read."""
+    path = MALLA_PATH if path is None else path
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return None
+    return set(LESSON_REF_RE.findall(text))
 
 
 def _strip_fenced_blocks(text: str) -> str:
@@ -256,6 +299,12 @@ def _validate_glossary(content: str, glossary: list[str]) -> list[str]:
         for label in GLOSSARY_LABELS:
             if label not in text:
                 errors.append(f'sección 3: a "{term}" le falta "{label}"')
+        folded = any(ETYMOLOGY_LABEL in block for block in DETAILS_RE.findall(text))
+        if not folded:
+            errors.append(
+                f'sección 3: a "{term}" le falta "{ETYMOLOGY_LABEL}" plegado en '
+                f"<details><summary>{ETYMOLOGY_LABEL}</summary>...</details>"
+            )
     headings = [_normalize_term(term) for term, _ in entries]
     for item in glossary:
         wanted = _normalize_term(item)
@@ -264,31 +313,69 @@ def _validate_glossary(content: str, glossary: list[str]) -> list[str]:
     return errors
 
 
-def _validate_sections(sections: dict[str, str], glossary: list[str]) -> list[str]:
+def _has_fence(content: str, language: str = "") -> bool:
+    return any(line.strip().startswith("```" + language) for line in content.splitlines())
+
+
+def _validate_connections(content: str, malla_ids: set[str] | None) -> list[str]:
+    errors: list[str] = []
+    for label in CONNECTIONS_LABELS:
+        if label not in content:
+            errors.append(f"la sección '{CONNECTIONS_SECTION}' debe incluir la etiqueta \"{label}\"")
+    if not _has_fence(content, "mermaid"):
+        errors.append(f"la sección '{CONNECTIONS_SECTION}' debe contener un mini mapa ```mermaid")
+    cited = sorted(set(LESSON_REF_RE.findall(content)))
+    if cited and malla_ids is None:
+        errors.append(f"no se pudo leer la malla para comprobar los IDs citados en '{CONNECTIONS_SECTION}'")
+    elif malla_ids is not None:
+        for lesson_id in cited:
+            if lesson_id not in malla_ids:
+                errors.append(
+                    f"la sección '{CONNECTIONS_SECTION}' cita {lesson_id}, que no existe en la malla"
+                )
+    return errors
+
+
+def _validate_sections(
+    sections: dict[str, str], glossary: list[str], malla_ids: set[str] | None
+) -> list[str]:
     errors: list[str] = []
     for heading, content in sections.items():
         if not content.strip():
             errors.append(f"la sección '{heading}' está vacía")
 
-    glossary_section = sections.get(GLOSSARY_SECTION)
-    if glossary_section is not None and glossary_section.strip():
+    def filled(heading: str) -> str | None:
+        content = sections.get(heading)
+        return content if content is not None and content.strip() else None
+
+    hook = filled(HOOK_SECTION)
+    if hook is not None and "?" not in hook:
+        errors.append(
+            f"la sección '{HOOK_SECTION}' debe terminar con una pregunta de predicción (falta '?')"
+        )
+
+    glossary_section = filled(GLOSSARY_SECTION)
+    if glossary_section is not None:
         errors.extend(_validate_glossary(glossary_section, glossary))
 
-    contrast = sections.get(CONTRAST_SECTION)
-    if contrast is not None and contrast.strip():
+    contrast = filled(CONTRAST_SECTION)
+    if contrast is not None:
         lines = contrast.splitlines()
         has_row = any(line.lstrip().startswith("|") for line in lines)
         has_separator = any(TABLE_SEPARATOR_RE.match(line) and "-" in line for line in lines)
         if not (has_row and has_separator):
             errors.append(f"la sección '{CONTRAST_SECTION}' debe contener una tabla markdown")
 
-    diagram = sections.get(DIAGRAM_SECTION)
-    if diagram is not None and diagram.strip():
-        if not any(line.strip().startswith("```mermaid") for line in diagram.splitlines()):
-            errors.append(f"la sección '{DIAGRAM_SECTION}' debe contener un bloque ```mermaid")
+    diagram = filled(DIAGRAM_SECTION)
+    if diagram is not None and not _has_fence(diagram, "mermaid"):
+        errors.append(f"la sección '{DIAGRAM_SECTION}' debe contener un bloque ```mermaid")
 
-    quiz = sections.get(QUIZ_SECTION)
-    if quiz is not None and quiz.strip():
+    which_fails = filled(WHICH_FAILS_SECTION)
+    if which_fails is not None and not DETAILS_RE.search(which_fails):
+        errors.append(f"la sección '{WHICH_FAILS_SECTION}' debe tener la respuesta dentro de <details>")
+
+    quiz = filled(QUIZ_SECTION)
+    if quiz is not None:
         questions = sum(1 for line in quiz.splitlines() if QUESTION_RE.match(line))
         if questions != 3:
             errors.append(
@@ -301,40 +388,74 @@ def _validate_sections(sections: dict[str, str], glossary: list[str]) -> list[st
                 f"la sección '{QUIZ_SECTION}' necesita al menos 3 bloques <details> "
                 f"con la respuesta (tiene {details})"
             )
+        if EXPLAIN_PROMPT not in quiz:
+            errors.append(f"la sección '{QUIZ_SECTION}' debe incluir \"{EXPLAIN_PROMPT}\"")
 
-    sources = sections.get(SOURCES_SECTION)
-    if sources is not None and sources.strip():
+    review_ai = filled(REVIEW_AI_SECTION)
+    if review_ai is not None:
+        quoted = any(line.strip().startswith(AI_OUTPUT_QUOTE) for line in review_ai.splitlines())
+        if not (_has_fence(review_ai) or quoted):
+            errors.append(
+                f"la sección '{REVIEW_AI_SECTION}' debe mostrar un fragmento de salida de IA "
+                f"(bloque de código o línea que empiece por '{AI_OUTPUT_QUOTE}')"
+            )
+
+    connections = filled(CONNECTIONS_SECTION)
+    if connections is not None:
+        errors.extend(_validate_connections(connections, malla_ids))
+
+    sources = filled(SOURCES_SECTION)
+    if sources is not None:
         links = len(LINK_RE.findall(sources))
         bare = len(BARE_URL_RE.findall(LINK_RE.sub("", sources)))
         if links + bare < 2:
             errors.append(
                 f"la sección '{SOURCES_SECTION}' necesita al menos 2 enlaces (tiene {links + bare})"
             )
+        if not DETAILS_RE.search(sources):
+            errors.append(
+                f"la sección '{SOURCES_SECTION}' debe ir plegada en "
+                "<details><summary>Fuentes</summary>...</details>"
+            )
     return errors
 
 
-def _validate_body(body: str, glossary: list[str]) -> list[str]:
+def _validate_body(
+    body: str, glossary: list[str], level: int | None, malla_ids: set[str] | None
+) -> list[str]:
     errors: list[str] = []
     lines = body.splitlines()
     headings = _heading_lines(lines)
-    found = [heading for _, heading in headings]
+    keys = [section_key(heading) for _, heading in headings]
 
-    missing = [heading for heading in EXPECTED_HEADINGS if heading not in found]
-    for heading in missing:
-        errors.append(f"falta el encabezado '{heading}'")
+    required = [
+        heading for heading in EXPECTED_HEADINGS
+        if heading != CONNECTIONS_SECTION or (level is not None and level >= CONNECTIONS_MIN_LEVEL)
+    ]
+    for heading in required:
+        if heading not in keys:
+            note = (
+                f" (obligatorio desde el nivel {CONNECTIONS_MIN_LEVEL})"
+                if heading == CONNECTIONS_SECTION else ""
+            )
+            errors.append(f"falta el encabezado '{heading}'{note}")
 
-    present_expected = [heading for heading in found if heading in EXPECTED_HEADINGS]
+    present_expected = [key for key in keys if key in EXPECTED_HEADINGS]
     expected_order = [heading for heading in EXPECTED_HEADINGS if heading in present_expected]
     if present_expected != expected_order:
         errors.append("los encabezados de las secciones no están en el orden de la plantilla")
 
+    for (_, heading), key in zip(headings, keys):
+        if key != SOURCES_SECTION and TIMER not in heading:
+            errors.append(f"el encabezado '{heading}' necesita la marca de tiempo (ej. '⏱ 2 min')")
+
     sections: dict[str, str] = {}
-    for position, (index, heading) in enumerate(headings):
-        if heading not in EXPECTED_HEADINGS or heading in sections:
+    for position, ((index, _), key) in enumerate(zip(headings, keys)):
+        if key not in EXPECTED_HEADINGS or key in sections:
             continue
         end = headings[position + 1][0] if position + 1 < len(headings) else len(lines)
-        sections[heading] = "\n".join(lines[index + 1:end])
-    errors.extend(_validate_sections(sections, glossary))
+        sections[key] = "\n".join(lines[index + 1:end])
+    errors.extend(_validate_sections(sections, glossary, malla_ids))
 
     words = len(_strip_fenced_blocks(body).split())
     if words > MAX_WORDS:
@@ -381,7 +502,7 @@ def _prose_lines(body_lines: list[str], first_line: int) -> list[tuple[int, str,
             continue
         if stripped.startswith("#"):
             if line.startswith("## "):
-                section = line.rstrip()
+                section = section_key(line.rstrip())
             result.append((number, "break", "", section))
             continue
         if stripped.startswith("<"):
@@ -495,7 +616,7 @@ def _validate_style(body: str, first_line: int) -> list[str]:
     exclamations = sum(text.count("¡") for _, text in prose)
     if exclamations > MAX_EXCLAMATIONS:
         errors.append(f"estilo: {exclamations} exclamaciones; máx. {MAX_EXCLAMATIONS}")
-    emojis = sum(len(EMOJI_RE.findall(text)) for _, text in prose)
+    emojis = sum(len(EMOJI_RE.findall(TIMER_RE.sub(" ", text))) for _, text in prose)
     if emojis > MAX_EMOJIS:
         errors.append(f"estilo: {emojis} emojis; máx. {MAX_EMOJIS}")
     return errors
@@ -510,8 +631,11 @@ def _body_first_line(text: str) -> int:
     return 1
 
 
-def validate_file(path: Path | str) -> list[str]:
-    """Return the list of error messages for one lesson file (empty if valid)."""
+def validate_file(path: Path | str, malla_path: Path | str | None = None) -> list[str]:
+    """Return the list of error messages for one lesson file (empty if valid).
+
+    malla_path overrides curriculum/malla.md (used to check cited lesson IDs).
+    """
     path = Path(path)
     try:
         text = path.read_text(encoding="utf-8")
@@ -524,9 +648,11 @@ def validate_file(path: Path | str) -> list[str]:
         return [str(exc)]
     glossary = meta.get("glosario")
     glossary = [item for item in glossary if item.strip()] if isinstance(glossary, list) else []
+    level = _as_int(meta.get("nivel"))
+    malla_ids = load_lesson_ids(None if malla_path is None else Path(malla_path))
     return (
         _validate_frontmatter(meta, path)
-        + _validate_body(body, glossary)
+        + _validate_body(body, glossary, level, malla_ids)
         + _validate_style(body, _body_first_line(text))
     )
 
