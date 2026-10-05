@@ -64,6 +64,15 @@ Motivo: leer sobre código no enseña a codear; hace falta práctica con resulta
 - [x] T18 — Mini biblioteca de pruebas (Node + navegador), primer taller `N1-M1-T` "Desarma una URL" con solución de referencia, y test del arnés que corre cada taller contra su referencia. Ruta: delegada (writer trigger: varios archivos de código).
 - [x] T19 — Prompts: subagente `tallerista`, skills `/taller` y `/nuevo-taller`, `talleres/README.md`, filas de taller en la malla, `como-usar.md` y `AGENTS.md`. Ruta: inline (prompts).
 
+### Ronda 5 (plantilla basada en evidencia + conexiones, aprobada por la usuaria el 2026-10-04)
+Motivo: la usuaria trajo una revisión de otra IA (pretesting, práctica espaciada, PRIMM, señalización, coherencia, ayuda que se desvanece) y pidió que las lecciones complejas muestren cómo se conecta cada tema con otros (mapa mental). Decisiones de la usuaria: tope de duración ~32 min; máximo 5 palabras nuevas por lección y partir las lecciones que lo superen; la sección de conexiones se hace aunque la otra IA no la propuso.
+Correcciones a la propuesta externa (verificadas en esta sesión): el repaso espaciado no va escrito en el archivo (depende de la fecha), lo hace `/docente` al empezar leyendo `aprendizaje/repasos.md`; el beneficio de `<details>` para TDAH (Gabay et al., 2018, Sci. Rep.) es una extrapolación, no un hallazgo directo.
+
+- [x] T20 — Plantilla nueva (13 secciones con ⏱, predicción en el gancho, "¿Cuál falla?", guía arriba del diagrama con nodo resaltado, etimología plegada, "explícalo con tus palabras", primer paso < 1 min, ayuda decreciente por nivel, "Cómo se conecta" obligatoria desde N2, "Ya puedes", fuentes plegadas; tope 32 min; glosario 1–5; "aprobada" exige recordar) + reglas nuevas del validador y sus tests. Ruta: delegada (writer trigger: validador + tests + plantilla).
+- [x] T21 — Prompts: `redactor`, `verificador`, `/docente` (2 preguntas de repaso al empezar; actualiza `curriculum/mapa.md` al aprobar), `/repaso` (criterio de aprobada), `/nueva-leccion`, `docs/reglas-contenido.md`, `docs/prueba-calibracion.md`. Ruta: delegada (writer trigger: 6+ archivos no triviales).
+- [x] T22 — Partir N1-M1-L01 (11 términos) en 3 lecciones de ≤5 términos, renumerar N1-M1 en la malla y referencias, crear `curriculum/mapa.md`. Ruta: delegada (depende de T20).
+- [ ] T23 — Verificación independiente de las lecciones partidas contra sus fuentes. Ruta: delegada (lectura).
+
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
 - Una lección de ejemplo pasa el validador.
@@ -85,6 +94,8 @@ Motivo: leer sobre código no enseña a codear; hace falta práctica con resulta
 - Ronda 3: T14 delegada; N1-M1-L01 reescrita (11 secciones, 11 términos con origen del nombre, 8 fuentes: MDN + RFC 3986). Validador OK; 72 tests en verde.
 
 - Ronda 4: T18 delegada; referencia 10/10, archivo inicial 0/10 con mensajes legibles; verificado en navegador ("0 de 10 pruebas pasan"). 33 filas de taller en la malla. 75 tests en verde.
+
+- Ronda 5: T20 `20a1cd2` (plantilla 13 secciones + 9 reglas del validador; mínimo de duración subido a 15 min para coincidir con la plantilla). T21 `3edfb6d` (9 archivos de prompts y docs). T22 `047068b` (L01 partida en L01 partes de la URL / L02 parámetros y anclas / L03 el viaje; N1-M1 renumerado L04–L09; `curriculum/mapa.md`; `CLAUDE.md` alineado a 15–32 min). `./init.sh` EXIT=0, 106 tests en verde. Lecciones en `borrador` hasta T23.
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.
