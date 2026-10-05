@@ -3,7 +3,7 @@ id: N1-M1-L03
 titulo: El viaje de una URL
 nivel: 1
 duracion_min: 28
-estado: borrador
+estado: verificada
 prerequisitos: [N1-M1-L01]
 fuentes:
   - https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works
@@ -11,6 +11,11 @@ fuentes:
   - https://developer.mozilla.org/en-US/docs/Glossary/HTTPS
   - https://developer.mozilla.org/en-US/docs/Glossary/Hypertext
   - https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL
+  - https://www.rfc-editor.org/rfc/rfc5737
+  - https://www.etymonline.com/word/packet
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/304
+  - https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools
+  - https://support.google.com/chrome/answer/157179
 glosario: [cliente y servidor, DNS, dirección IP, HTTP, paquete]
 ---
 
@@ -35,13 +40,13 @@ https://tienda.com/productos
 ```
 
 ### Cliente y servidor
-**Qué es:** el *cliente* es quien pide (tu navegador). El *servidor* es el computador que responde y entrega la página.
+**Qué es:** el *cliente* es quien pide (tu navegador). El *servidor* es el computador que responde y entrega la página. Ese computador tiene un programa encendido cuyo trabajo es contestar pedidos.
 
 **Ejemplo:** tu Chrome es el cliente. El computador de `tienda.com` es el servidor.
 
 <details><summary>Por qué se llama así</summary>
 
-Como en un negocio: el cliente pide un servicio y el servidor lo sirve.
+**Truco:** piensa en un negocio. El cliente pide un servicio y el servidor lo sirve.
 MDN, la documentación web de referencia, usa la imagen de una carretera: en una punta está tu casa (el cliente) y en la otra, la tienda (el servidor).
 
 </details>
@@ -49,7 +54,7 @@ MDN, la documentación web de referencia, usa la imagen de una carretera: en una
 ### DNS
 **Qué es:** el sistema que traduce un dominio a una dirección IP.
 
-**Ejemplo:** le preguntas al DNS por `mozilla.org` y te responde con un número como `192.0.2.172`.
+**Ejemplo:** le preguntas al DNS por `tienda.com` y te responde con un número como `192.0.2.172`. Ese número es de ejemplo: está reservado para documentos y manuales, no es la dirección real de ningún sitio.
 
 <details><summary>Por qué se llama así</summary>
 
@@ -86,13 +91,12 @@ HTTPS es la misma conversación, pero cifrada (escrita en un código que nadie m
 ### Paquete
 **Qué es:** cada uno de los pedazos pequeños en que viaja la información por internet.
 
-**Ejemplo:** una página llega en muchos paquetes. Pueden llegar desordenados, y el navegador los vuelve a ordenar con los números de las etiquetas.
+**Ejemplo:** una página llega en muchos paquetes. Pueden llegar desordenados, y tu computador los vuelve a ordenar con los números de las etiquetas.
 
 <details><summary>Por qué se llama así</summary>
 
-En inglés, *packet*, "paquetito".
-Cada uno lleva una etiqueta (llamada *header*, "encabezado") con datos como de dónde viene, a dónde va y qué número de pedazo es.
-Dentro va el contenido, que se llama *payload*, "carga".
+En inglés, *packet*, "paquetito": viene de *pack* ("bulto") con una terminación que lo hace pequeño. Al principio nombraba los paquetes de cartas oficiales.
+Cada uno lleva una etiqueta numerada con datos como de dónde viene, a dónde va y qué número de pedazo es.
 
 </details>
 
@@ -106,14 +110,14 @@ Tú las juntas en orden y ya tienes la imagen completa.
 
 | En la agencia | En internet |
 | :-- | :-- |
-| Nombre de la agencia | Dominio (`elespectador.com`) |
+| Nombre de la agencia | Dominio (`tienda.com`) |
 | Directorio telefónico | DNS |
 | Número de teléfono | Dirección IP |
 | Pedido formal | Petición HTTP |
 | "Sí, aquí va" | Respuesta `200 OK` |
 | Partes numeradas | Paquetes |
 
-**Dónde se rompe la analogía:** en la agencia una persona decide si te atiende. En internet, el servidor es un programa que responde solo, sin que nadie revise tu pedido a mano.
+**Dónde se rompe la analogía:** en la agencia una persona decide si te atiende. En internet, el servidor es un computador con un programa que responde solo, sin que nadie revise tu pedido a mano.
 
 ## 5. Diagrama ⏱ 2 min
 Mira primero el nodo DNS: el navegador no puede hablar con el servidor hasta que el DNS le da el número.
@@ -177,32 +181,33 @@ Explícalo con tus palabras (2 frases) antes de abrir la respuesta.
 <details><summary>Respuesta</summary>Traduce el dominio (un nombre fácil de recordar) a la dirección IP (el número que usan los computadores). Hace falta porque los computadores se encuentran por número, no por nombre.</details>
 
 2. Una web no carga y una IA te dice "el sitio está caído". ¿Qué le preguntarías?
-<details><summary>Respuesta</summary>En qué paso falló: el DNS (no encontró el número), la conexión o la respuesta del servidor. Cada uno se arregla distinto.</details>
+<details><summary>Respuesta</summary>En qué paso falló: el DNS (no encontró el número), la petición HTTP o la respuesta del servidor. Cada uno se arregla distinto.</details>
 
 3. Una IA escribe un programa que se conecta a `192.0.2.172` en vez de a `tienda.com`. ¿Qué está mal?
-<details><summary>Respuesta</summary>Puso una dirección IP fija en lugar del dominio. Lo habitual es usar el dominio y dejar que el DNS haga la traducción. Pregúntale por qué lo hizo así.</details>
+<details><summary>Respuesta</summary>Puso una dirección IP fija en lugar del dominio. Además, `192.0.2.172` es un número reservado para ejemplos en documentos: no es la dirección real de `tienda.com` ni de ningún sitio. Pregúntale de dónde sacó ese número.</details>
 
 ## 9. Mini ejercicio ⏱ 5 min
-1. Escribe `developer.mozilla.org` en la barra de direcciones y pulsa Enter.
-2. Abre las herramientas de desarrollador con `Cmd + Option + I` y ve a la pestaña **Network** (red).
-3. Recarga la página y mira la columna **Status** (estado) de la primera fila.
+1. En Chrome, abre `https://developer.mozilla.org/en-US/`.
+2. Abre las herramientas de desarrollador con `Cmd + Option + I`. Son un panel del navegador que muestra por dentro la página y todo lo que pidió.
+3. Ve a la pestaña **Network** (red): ahí aparece una fila por cada cosa que el navegador pidió, con su estado.
+4. Recarga sin usar copias guardadas con `Cmd + Shift + R` y mira la columna **Status** (estado) de la primera fila.
 
-**Sabrás que lo lograste cuando:** veas el número `200` en la columna Status y puedas decir qué significa: "sí, aquí va".
+**Sabrás que lo lograste cuando:** veas `200` en la columna Status y puedas decir qué significa: "sí, aquí va". Si ves `304` también está bien: significa "no cambió, usa la copia que ya tienes".
 
 ## 10. Cómo te ayuda a revisar a la IA ⏱ 2 min
 Cuando algo no carga, este es el tipo de diagnóstico que no te sirve:
 
 > Salida de IA: "Tu sitio está caído. Vuelve a intentarlo más tarde."
 
-- Pregúntale en qué paso falló: DNS, conexión o respuesta del servidor. Cada uno se arregla distinto.
-- Si una IA pone una dirección IP fija en el código en vez del dominio, pregunta por qué. Lo habitual es usar el dominio y dejar que el DNS haga la traducción.
+- Pregúntale en qué paso falló: DNS, petición HTTP o respuesta del servidor. Cada uno se arregla distinto.
+- Si una IA pone una dirección IP fija en el código en vez del dominio, pregunta de dónde sacó ese número. Si es `192.0.2.172`, es un número de ejemplo, no la dirección real de ningún sitio.
 
 ## 11. Cómo se conecta ⏱ 2 min
 **Viene de:** N1-M1-L01. El dominio que aprendiste a separar es el nombre que el DNS traduce a número.
 
 **Lleva a:** cada paso del viaje tiene su lección propia. N1-M1-L04 (cliente y servidor), N1-M1-L05 (HTTP y sus códigos, como el 200), N1-M1-L06 (DNS y dominios) y N1-M1-L07 (HTTPS y certificados).
 
-**Si lo combinas con…:** N1-M1-L02, sabes qué parte de la URL viaja en la petición y cuál se queda en tu navegador. Los parámetros llegan al servidor; el ancla nunca se envía.
+**Si lo combinas con…:** N1-M1-L02, sabes qué parte de la URL viaja en la petición y cuál se queda en tu navegador. Los parámetros llegan al servidor; el ancla no viaja con el pedido.
 
 ```mermaid
 flowchart LR
@@ -221,10 +226,15 @@ Ya puedes contar en cuatro pasos qué pasa entre pulsar Enter y ver una página,
 ## 13. Fuentes
 <details><summary>Fuentes</summary>
 
-- [How the web works (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works): pasos DNS, HTTP, 200 OK, paquetes con encabezado y carga; analogía de la carretera; libreta de direcciones; ejemplo de IP.
+- [How the web works (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works): pasos DNS, HTTP, 200 OK, paquetes con etiqueta; analogía de la carretera; libreta de direcciones; ejemplo de IP.
 - [HTTP (MDN Glossary)](https://developer.mozilla.org/en-US/docs/Glossary/HTTP): significado de *HyperText Transfer Protocol*.
 - [HTTPS (MDN Glossary)](https://developer.mozilla.org/en-US/docs/Glossary/HTTPS): *HyperText Transfer Protocol Secure*, versión cifrada de HTTP.
 - [Hypertext (MDN Glossary)](https://developer.mozilla.org/en-US/docs/Glossary/Hypertext): definición de hipertexto y su origen (Ted Nelson, hacia 1965).
 - [What is a URL? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL): los parámetros los recibe el servidor; lo que va después de `#` nunca se envía con el pedido.
+- [RFC 5737: IPv4 Address Blocks Reserved for Documentation](https://www.rfc-editor.org/rfc/rfc5737): `192.0.2.0/24` está reservado para documentación y no debe aparecer en internet.
+- [packet (Etymonline)](https://www.etymonline.com/word/packet): de *pack* más el diminutivo *-et*, "paquete pequeño"; primero se usó para envíos de cartas oficiales.
+- [304 Not Modified (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/304): la copia guardada sigue siendo válida; no hace falta enviarla de nuevo.
+- [What are browser developer tools? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools): qué son las herramientas de desarrollador; atajo `Cmd + Option + I` en macOS.
+- [Chrome keyboard shortcuts (Google)](https://support.google.com/chrome/answer/157179): `Cmd + Shift + R` recarga la página sin usar el contenido guardado.
 
 </details>

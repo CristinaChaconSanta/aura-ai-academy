@@ -28,9 +28,9 @@ Transversales (aparecen en todos los niveles): **revisar a la IA** (sección 9 d
 ### N1-M1 · Internet
 | ID | Lección | Estado |
 | :-- | :-- | :-- |
-| N1-M1-L01 | Las partes de una URL | 📝 |
-| N1-M1-L02 | Parámetros y anclas: el final de una URL | 📝 |
-| N1-M1-L03 | El viaje de una URL | 📝 |
+| N1-M1-L01 | Las partes de una URL | 🔎 |
+| N1-M1-L02 | Parámetros y anclas: el final de una URL | 🔎 |
+| N1-M1-L03 | El viaje de una URL | 🔎 |
 | N1-M1-L04 | Cliente y servidor | ⬜ |
 | N1-M1-L05 | HTTP: peticiones, respuestas y códigos (200, 404, 500) | ⬜ |
 | N1-M1-L06 | DNS y dominios | ⬜ |

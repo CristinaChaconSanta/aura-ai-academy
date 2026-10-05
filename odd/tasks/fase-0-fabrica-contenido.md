@@ -71,7 +71,8 @@ Correcciones a la propuesta externa (verificadas en esta sesión): el repaso esp
 - [x] T20 — Plantilla nueva (13 secciones con ⏱, predicción en el gancho, "¿Cuál falla?", guía arriba del diagrama con nodo resaltado, etimología plegada, "explícalo con tus palabras", primer paso < 1 min, ayuda decreciente por nivel, "Cómo se conecta" obligatoria desde N2, "Ya puedes", fuentes plegadas; tope 32 min; glosario 1–5; "aprobada" exige recordar) + reglas nuevas del validador y sus tests. Ruta: delegada (writer trigger: validador + tests + plantilla).
 - [x] T21 — Prompts: `redactor`, `verificador`, `/docente` (2 preguntas de repaso al empezar; actualiza `curriculum/mapa.md` al aprobar), `/repaso` (criterio de aprobada), `/nueva-leccion`, `docs/reglas-contenido.md`, `docs/prueba-calibracion.md`. Ruta: delegada (writer trigger: 6+ archivos no triviales).
 - [x] T22 — Partir N1-M1-L01 (11 términos) en 3 lecciones de ≤5 términos, renumerar N1-M1 en la malla y referencias, crear `curriculum/mapa.md`. Ruta: delegada (depende de T20).
-- [ ] T23 — Verificación independiente de las lecciones partidas contra sus fuentes. Ruta: delegada (lectura).
+- [x] T23 — Verificación independiente de las lecciones partidas contra sus fuentes. Ruta: delegada (lectura). Resultado: las 3 en `corregir` (afirmaciones sin fuente, puerto omitido, ejercicio de L03 puede mostrar 304, términos extra en L03).
+- [x] T24 — Aplicar las correcciones de T23 y revisar de nuevo los puntos corregidos. Ruta: delegada (writer trigger: 3 lecciones).
 
 ## Criterios de aceptación
 - `./init.sh` sale con 0 y el validador corre más de 0 tests.
@@ -96,6 +97,7 @@ Correcciones a la propuesta externa (verificadas en esta sesión): el repaso esp
 - Ronda 4: T18 delegada; referencia 10/10, archivo inicial 0/10 con mensajes legibles; verificado en navegador ("0 de 10 pruebas pasan"). 33 filas de taller en la malla. 75 tests en verde.
 
 - Ronda 5: T20 `20a1cd2` (plantilla 13 secciones + 9 reglas del validador; mínimo de duración subido a 15 min para coincidir con la plantilla). T21 `3edfb6d` (9 archivos de prompts y docs). T22 `047068b` (L01 partida en L01 partes de la URL / L02 parámetros y anclas / L03 el viaje; N1-M1 renumerado L04–L09; `curriculum/mapa.md`; `CLAUDE.md` alineado a 15–32 min). `./init.sh` EXIT=0, 106 tests en verde. Lecciones en `borrador` hasta T23.
+- T23: verificación independiente (todas las fuentes descargadas): 3 lecciones en `corregir`. T24: correcciones aplicadas (fuentes nuevas: WHATWG URL, OWASP, RFC 5737, Etymonline, MDN 304, MDN devtools, atajos de Chrome; RAE no se pudo descargar, el origen de "esquema" quedó como truco); revisión puntual de los arreglos; las 3 pasan a `verificada` (🔎). 106 tests en verde.
 
 ## Siguiente paso
 La usuaria abre el proyecto en Cursor y sigue `docs/como-usar.md`.

@@ -20,6 +20,10 @@
 - **Hoja de ruta** `docs/hoja-de-ruta.md`: fase 1 calibración → fase 2 backend → fase 3 frontend (con referencias en `docs/referencias-frontend/`) → fase 4 docente en la app.
 - Estado: `./init.sh` en verde, 75 tests pasan. Tareas y evidencia en `odd/tasks/fase-0-fabrica-contenido.md`.
 
+## Ronda 5 (2026-10-04)
+- Plantilla nueva basada en evidencia: 13 secciones con ⏱, predicción, "¿Cuál falla?", máx. 5 palabras nuevas, 15–32 min, "Cómo se conecta" (obligatoria desde N2) y mapa global `curriculum/mapa.md`. "Aprobada" exige recordar 2 de 3 en `/repaso`.
+- La lección de la URL se partió en N1-M1-L01/L02/L03 (verificadas 🔎); N1-M1 renumerado (L04–L09).
+
 ## Decisiones pendientes (de la aprendiz)
 1. **Cuándo construir la app.** Opciones: A) backend ya, en paralelo con calibrar 2–3 lecciones (recomendada); B) app primero sin calibrar; C) calibrar primero.
 2. **Revisión automática** (gentle-ai, riesgo alto por el validador que ejecuta procesos): pendiente de su permiso explícito.

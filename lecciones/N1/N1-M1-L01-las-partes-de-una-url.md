@@ -3,13 +3,14 @@ id: N1-M1-L01
 titulo: Las partes de una URL
 nivel: 1
 duracion_min: 27
-estado: borrador
+estado: verificada
 prerequisitos: []
 fuentes:
   - https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL
   - https://www.rfc-editor.org/rfc/rfc3986
   - https://developer.mozilla.org/en-US/docs/Glossary/URL
   - https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works
+  - https://url.spec.whatwg.org/
 glosario: [URL, esquema, dominio, ruta]
 ---
 
@@ -36,6 +37,7 @@ Cada palabra de abajo es un pedazo de esa dirección.
 
 ### URL
 **Qué es:** la dirección completa de algo en internet: una página, una imagen, un video.
+A ese "algo" se le llama *recurso*: cualquier cosa que puedes pedir, como una página, una foto o un PDF.
 
 **Ejemplo:** `https://tienda.com/productos` es una URL completa.
 
@@ -43,7 +45,7 @@ Cada palabra de abajo es un pedazo de esa dirección.
 
 Son las siglas en inglés de *Uniform Resource Locator*, que significa "localizador uniforme de recursos".
 *Localizador* porque dice dónde está algo. *Uniforme* porque todas siguen las mismas reglas de escritura.
-*Recurso* es la palabra técnica para "cualquier cosa que puedes pedir": una página, una foto, un PDF.
+Así lo explica el estándar oficial de las URL, el RFC 3986, en su sección 1.1.
 
 </details>
 
@@ -56,7 +58,7 @@ Son las siglas en inglés de *Uniform Resource Locator*, que significa "localiza
 
 El estándar oficial de las URL es un documento técnico llamado RFC 3986, publicado en 2005. Ahí esta parte se llama *scheme*.
 En ese documento, un *scheme* es un conjunto de reglas para nombrar cosas.
-En español se tradujo como "esquema", en el sentido de "sistema" o "plan".
+**Truco:** para recordarlo, piensa en "esquema" como el plan que el navegador sigue para pedir el recurso.
 
 </details>
 
@@ -82,7 +84,7 @@ El estándar oficial llama *authority* (autoridad) a la zona de la URL donde va 
 
 En inglés se llama *path*, que significa "camino" o "sendero".
 Funciona como las carpetas de tu computador: `Documentos/Fotos/viaje.jpg`.
-Según MDN, la documentación web de referencia, en los primeros años de la web la ruta señalaba un archivo real. Hoy casi siempre es una convención que maneja el sitio.
+Según MDN, la documentación web de referencia, en los primeros años de la web la ruta señalaba un archivo real. Hoy casi siempre es una abstracción: un nombre que maneja el computador del sitio, sin un archivo real detrás.
 
 </details>
 
@@ -101,7 +103,7 @@ Después escribes la ciudad. Al final, el edificio donde está la redacción.
 
 A la carta le faltan dos datos: el apartamento y la persona. Son las dos partes del final de la URL, y las verás en N1-M1-L02.
 
-**Dónde se rompe la analogía:** el edificio de una carta existe de verdad. La ruta de una URL casi nunca es un lugar real: según MDN, hoy suele ser una convención del sitio, sin un archivo físico detrás.
+**Dónde se rompe la analogía:** el edificio de una carta existe de verdad. La ruta de una URL casi nunca es un lugar real: según MDN, hoy casi siempre es una abstracción que maneja el computador del sitio, sin un archivo real detrás.
 
 ## 5. Diagrama ⏱ 2 min
 Mira primero el nodo Dominio: es la parte que dice a qué computador ir.
@@ -168,7 +170,7 @@ Explícalo con tus palabras (2 frases) antes de abrir la respuesta.
 <details><summary>Respuesta</summary>`productos` es parte de la ruta. El dominio va justo después de `://` y antes de la siguiente `/`: es `tienda.com`.</details>
 
 ## 9. Mini ejercicio ⏱ 5 min
-1. Haz clic en la barra de direcciones de la página que tienes abierta ahora mismo para ver la URL completa.
+1. Abre cualquier página en tu navegador (Chrome, Safari…) y haz clic en la barra de direcciones para ver la URL completa.
 2. Señala con el dedo el esquema, el dominio y la ruta.
 3. Abre `https://developer.mozilla.org/en-US/docs/Learn_web_development` y repite: esquema, dominio, ruta.
 4. Borra todo lo que va después del dominio, deja solo `https://developer.mozilla.org` y pulsa Enter.
@@ -178,9 +180,10 @@ Explícalo con tus palabras (2 frases) antes de abrir la respuesta.
 ## 10. Cómo te ayuda a revisar a la IA ⏱ 2 min
 Cuando le pidas a una IA que arme un enlace, revisa las tres partes por separado.
 
-> Salida de IA: "Listo. El enlace a tu portafolio es `https:/miportafolio.com/proyectos`."
+> Salida de IA: "Listo. El enlace a tu portafolio es `https//miportafolio.com/proyectos`."
 
-- Mira el separador entre el esquema y el dominio: aquí hay una sola `/`. MDN explica que `//` es lo que avisa que viene el dominio. Con una sola barra, falta esa señal.
+- Mira el separador entre el esquema y el dominio: faltan los dos puntos. MDN explica que `:` separa el esquema del resto. Sin ellos, el navegador no encuentra esquema y no puede leer la dirección como una URL completa.
+- Ojo con el error vecino, `https:/` con una sola barra: el estándar que siguen los navegadores lo marca como error, pero lo corrige en silencio. Otras herramientas pueden no perdonarlo, así que pide siempre `https://` completo.
 - Pídele a la IA que te muestre el enlace dividido en esquema, dominio y ruta. Así ves de un vistazo si alguna parte quedó mal escrita.
 - Si la IA dice "la URL es `tienda.com`", corrígela: eso es solo el dominio. Una URL completa empieza con su esquema.
 
@@ -189,7 +192,9 @@ Cuando le pidas a una IA que arme un enlace, revisa las tres partes por separado
 
 **Lleva a:** N1-M1-L02, que explica las dos partes del final de la URL (parámetros y ancla). También N1-M1-L03, que sigue el viaje del dominio cuando pulsas Enter.
 
-**Si lo combinas con…:** N1-M1-L02, tienes las cinco partes de una URL y puedes resolver el taller N1-M1-T, un programa que desarma una URL. Con N1-M2-L02 (archivos, carpetas y rutas) verás por qué la ruta de una URL se parece a la de un archivo en tu computador.
+**Si lo combinas con…:** N1-M1-L02, tienes las cinco partes de una URL que más vas a ver y puedes resolver el taller N1-M1-T, un programa que desarma una URL. Con N1-M2-L02 (archivos, carpetas y rutas) verás por qué la ruta de una URL se parece a la de un archivo en tu computador.
+
+Hay una sexta parte que verás más adelante: el *puerto* (`:80`), una especie de puerta de entrada al computador del sitio. Casi siempre va escondida, así que rara vez la ves escrita.
 
 ```mermaid
 flowchart LR
@@ -207,9 +212,10 @@ Ya puedes desarmar una URL en esquema, dominio y ruta, y detectar cuándo una IA
 ## 13. Fuentes
 <details><summary>Fuentes</summary>
 
-- [What is a URL? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL): partes de una URL; `:` separa el esquema y `//` anuncia el dominio; esquemas `http`, `https` y `mailto:`; analogía de la carta; la ruta antes era un archivo real y hoy es sobre todo una convención del sitio.
-- [RFC 3986: URI Generic Syntax (2005)](https://www.rfc-editor.org/rfc/rfc3986): nombres oficiales *scheme*, *authority* y *path*; el esquema termina en `:`.
+- [What is a URL? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL): partes de una URL; `:` separa el esquema y `//` anuncia el dominio; esquemas `http`, `https` y `mailto:`; analogía de la carta. La ruta antes era un archivo real y hoy es sobre todo una abstracción que maneja el servidor. El puerto (`:80`) es otra parte, que casi siempre se omite.
+- [RFC 3986: URI Generic Syntax (2005)](https://www.rfc-editor.org/rfc/rfc3986): nombres oficiales *scheme*, *authority* y *path*; el esquema termina en `:`. Sección 1.1: qué significan *uniforme*, *recurso* y *localizador*.
 - [URL (MDN Glossary)](https://developer.mozilla.org/en-US/docs/Glossary/URL): significado de *Uniform Resource Locator*.
 - [How the web works (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works): las direcciones reales de la web son números; el dominio es el nombre fácil de recordar.
+- [URL Standard (WHATWG)](https://url.spec.whatwg.org/): `https:/` con una sola barra es un error de validación que el analizador corrige; sin `:` no hay esquema y el análisis falla.
 
 </details>

@@ -3,12 +3,13 @@ id: N1-M1-L02
 titulo: Parámetros y anclas: el final de una URL
 nivel: 1
 duracion_min: 25
-estado: borrador
+estado: verificada
 prerequisitos: [N1-M1-L01]
 fuentes:
   - https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL
   - https://www.rfc-editor.org/rfc/rfc3986
   - https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a
+  - https://community.owasp.org/vulnerabilities/Information_exposure_through_query_strings_in_url
 glosario: [parámetros, ancla]
 ---
 
@@ -22,7 +23,7 @@ Las dos cosas dependen de lo que va al final de la URL: después de un `?` o de 
 ¿Qué crees que pasa con lo que va después del `#` cuando pulsas Enter: viaja hasta el computador de la tienda o se queda en tu navegador?
 
 ## 2. La idea en una frase ⏱ 30 s
-**Lo que va después de `?` viaja al computador del sitio para afinar el pedido; lo que va después de `#` se queda en tu navegador y señala un punto dentro de la página.**
+**Lo que va después de `?` viaja al computador del sitio para afinar el pedido; lo que va después de `#` no viaja con el pedido y le señala a tu navegador un punto dentro de la página.**
 
 ## 3. Las palabras nuevas ⏱ 2 min
 En N1-M1-L01 desarmaste el esquema, el dominio y la ruta. Esta es la misma dirección, con sus dos últimas partes:
@@ -40,8 +41,8 @@ En esta lección, "el computador del sitio" es el computador que tiene la págin
 
 <details><summary>Por qué se llama así</summary>
 
-El estándar oficial de las URL (RFC 3986) llama a esta parte *query*, que significa "consulta".
-En español se popularizó "parámetros" porque cada par es un ajuste de la consulta, como los filtros de una búsqueda.
+El estándar oficial de las URL (RFC 3986) llama a toda esta parte *query*, que significa "consulta".
+El nombre "parámetros" no nació en español: MDN, en inglés, los llama *parameters*. Cada par `nombre=valor` es uno de ellos.
 Truco para recordarlo: el `?` marca el momento en que la URL "hace una pregunta".
 
 </details>
@@ -55,7 +56,8 @@ Truco para recordarlo: el `?` marca el momento en que la URL "hace una pregunta"
 
 El estándar oficial lo llama *fragment*, "fragmento", porque apunta a un pedazo del recurso.
 MDN, la documentación web de referencia, lo llama *anchor*, "ancla".
-En HTML, el lenguaje con el que se escriben las páginas, los enlaces usan el elemento `<a>`, que se llama *anchor element*. Sirve también para saltar a una sección de la misma página.
+
+En HTML, el lenguaje con el que se escriben las páginas, los enlaces se marcan con la etiqueta `<a>` (una marca entre `< >` que le dice al navegador "esto es un enlace"). Se llama *anchor element* y sirve también para saltar a una sección de la misma página.
 Truco para recordarlo: un ancla fija el barco en un punto; esta parte fija la pantalla en un punto de la página.
 
 </details>
@@ -71,7 +73,7 @@ MDN completa la imagen con las dos partes que faltaban.
 
 El apartamento afina la entrega: no basta con el edificio. Los parámetros hacen lo mismo con el pedido.
 
-**Dónde se rompe la analogía:** en la carta, el cartero lee el nombre de la persona. En la web, el ancla nunca sale de tu navegador. El computador del sitio no la recibe.
+**Dónde se rompe la analogía:** en la carta, el cartero lee el nombre de la persona. En la web, el ancla no viaja con el pedido al computador del sitio. Solo la usa tu navegador.
 
 ## 5. Diagrama ⏱ 2 min
 Mira primero el nodo Navegador: ahí la URL se parte en dos caminos.
@@ -80,7 +82,7 @@ Mira primero el nodo Navegador: ahí la URL se parte en dos caminos.
 flowchart LR
   U["tienda.com/productos?categoria=libros#resenas"] --> N["Navegador"]
   N -->|"viaja"| S["Computador de la tienda recibe /productos?categoria=libros"]
-  N -->|"se queda"| A["Ancla: resenas"]
+  N -->|"no viaja"| A["Ancla: resenas"]
   S --> P["Devuelve la lista de libros"]
   A --> B["El navegador baja a las reseñas"]
   style N fill:#ffe08a,stroke:#333
@@ -93,7 +95,7 @@ Las dos partes del final de la URL, frente a frente:
 | :-- | :-- | :-- |
 | Símbolo | `?` al inicio y `&` entre pares | `#` |
 | Ejemplo | `?categoria=libros` | `#resenas` |
-| ¿Viaja al computador del sitio? | Sí | No, se queda en el navegador |
+| ¿Viaja al computador del sitio? | Sí | No viaja con el pedido |
 | Quién la usa | El computador del sitio, para afinar lo que devuelve | El navegador, para saltar a un punto |
 | Nombre en el estándar | *query* (consulta) | *fragment* (fragmento) |
 | En la carta | Número del apartamento | Persona a quien va dirigida |
@@ -135,7 +137,7 @@ Explícalo con tus palabras (2 frases) antes de abrir la respuesta.
 <details><summary>Respuesta</summary>Parámetro: `fecha=hoy`, y sí llega. Ancla: `futbol`, y no llega: el navegador la usa para bajar a esa parte de la página.</details>
 
 3. Una IA escribe un programa para el computador de la tienda que lee lo que viene después del `#` para decidir qué mostrar. ¿Qué está mal?
-<details><summary>Respuesta</summary>El ancla nunca se envía al computador del sitio. Ese programa nunca va a recibir el dato. La información tendría que ir en la ruta o en un parámetro con `?`.</details>
+<details><summary>Respuesta</summary>El ancla no viaja con el pedido al computador del sitio. Ese programa nunca va a recibir el dato. La información tendría que ir en la ruta o en un parámetro con `?`.</details>
 
 ## 9. Mini ejercicio ⏱ 5 min
 1. Abre `developer.mozilla.org/en-US/search?q=URL` y encuentra en la barra de direcciones el `?` y el parámetro `q=URL`.
@@ -150,16 +152,18 @@ Este es el tipo de respuesta que debes frenar:
 
 > Salida de IA: "Para que la tienda muestre solo los libros, agrega `#categoria=libros` al final del enlace."
 
-- Qué está mal: usa `#`, y el ancla nunca viaja al computador de la tienda. El dato tiene que ir como parámetro: `?categoria=libros`.
+- Qué está mal: usa `#`, y el ancla no viaja con el pedido al computador de la tienda. El dato tiene que ir como parámetro: `?categoria=libros`.
 - Si la IA inventa un parámetro, como `?orden=barato`, pregúntale de dónde lo sacó. MDN advierte que cada sitio tiene sus propias reglas sobre parámetros. La única forma segura de saber cuáles entiende es preguntarle a quien lo administra.
-- Si la IA mete datos privados (como un correo o una contraseña) en los parámetros, detenla. La URL queda a la vista en la barra de direcciones.
+- Si la IA mete datos privados (como un correo o una contraseña) en los parámetros, detenla. La URL queda a la vista en la barra de direcciones. Además, según OWASP (la fundación de referencia en seguridad web), queda guardada en el historial del navegador y en los registros del sitio.
 
 ## 11. Cómo se conecta ⏱ 2 min
 **Viene de:** N1-M1-L01, que te dio el esquema, el dominio y la ruta. Aquí completas la URL con sus dos últimas partes.
 
 **Lleva a:** N1-M1-L03, que sigue el viaje de la URL cuando pulsas Enter y le pone nombre al computador que recibe los parámetros.
 
-**Si lo combinas con…:** N1-M1-L01, tienes las cinco partes de una URL y puedes resolver el taller N1-M1-T. Su reto te pide escribir una función que lee un parámetro por su nombre.
+**Si lo combinas con…:** N1-M1-L01, tienes las cinco partes de una URL que más vas a ver y puedes resolver el taller N1-M1-T. Su reto te pide escribir una función (un pedacito de programa que recibe datos y devuelve un resultado) que lee un parámetro por su nombre.
+
+Existe una sexta parte, el *puerto* (`:80`), que verás más adelante. Casi siempre va escondida.
 
 ```mermaid
 flowchart LR
@@ -171,13 +175,14 @@ flowchart LR
 ```
 
 ## 12. Ya puedes ⏱ 10 s
-Ya puedes distinguir qué parte del final de una URL viaja al sitio (`?`) y cuál se queda en tu navegador (`#`).
+Ya puedes distinguir qué parte del final de una URL viaja al sitio (`?`) y cuál no viaja con el pedido (`#`).
 
 ## 13. Fuentes
 <details><summary>Fuentes</summary>
 
-- [What is a URL? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL): parámetros con `?` y `&`; el servidor los usa y cada uno tiene sus reglas. El ancla como marcador, también en video y audio; lo que va después de `#` nunca se envía con el pedido. Analogía de la carta (apartamento y persona).
+- [What is a URL? (MDN)](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL): parámetros con `?` y `&`; el servidor los usa y cada uno tiene sus reglas. El ancla como marcador, también en video y audio; lo que va después de `#` nunca se envía con el pedido. Analogía de la carta (apartamento y persona). Llama *parameters* a los pares `nombre=valor`; el puerto (`:80`) casi siempre se omite.
 - [RFC 3986: URI Generic Syntax (2005)](https://www.rfc-editor.org/rfc/rfc3986): nombres oficiales *query* y *fragment*; el fragmento lo usa solo el programa del usuario.
 - [The anchor element (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a): el elemento `<a>` se llama *anchor* y enlaza a secciones de la misma página.
+- [Information exposure through query strings in URL (OWASP)](https://community.owasp.org/vulnerabilities/Information_exposure_through_query_strings_in_url): los datos de los parámetros quedan expuestos en el historial del navegador, la caché y los registros del servidor web.
 
 </details>
